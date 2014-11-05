@@ -1,0 +1,131 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="Create A User"
+					actionListener="#{userBean.navigateToNewUserPage}" />
+			</p:breadCrumb>
+
+			<p:messages id="messages" showDetail="false" autoUpdate="true" />
+
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="Create a new User" styleClass="h1" />
+			</h:panelGrid>
+			<h:panelGrid columns="1" id="newCustomerPanel"
+				styleClass="big_table_left">
+
+
+				<h:panelGrid columns="2" id="customerDetailsPanel"
+					styleClass="big_table_left">
+
+					<h:outputText value="Office Details" styleClass="bold" />
+					<p:spacer width="10" />
+					<h:outputText value="Office:" />
+					<p:selectOneMenu value="#{userBean.userT.officeDTO.officeId}">
+						<f:selectItems value="#{appBean.offices}" />
+					</p:selectOneMenu>
+
+					<p:spacer />
+					<p:separator></p:separator>
+
+
+					<h:outputText value="Client Details" styleClass="bold" />
+					<p:spacer />
+
+					<h:outputText value="First Name:" />
+
+					<h:panelGroup>
+						<p:inputText value="#{userBean.userT.firstName}" required="true"
+							requiredMessage="Please enter the First Name"></p:inputText>
+						<h:outputLabel value="Last Name:" />
+						<p:inputText value="#{userBean.userT.lastName}" required="true"
+							requiredMessage="Please enter the last name"></p:inputText>
+					</h:panelGroup>
+
+					<h:outputLabel value="Government Id:" />
+					<p:inputText value="#{userBean.userT.governmentId}"></p:inputText>
+
+					<h:outputLabel value="Sex:" />
+					<p:selectOneMenu value="#{userBean.userT.gender}">
+						<f:selectItems value="#{appBean.sexes}" />
+					</p:selectOneMenu>
+
+
+					<h:outputLabel value="Date of Birth:" />
+					<p:calendar value="#{userBean.userT.dateOfBirth}" required="true"
+						requiredMessage="Please enter Date of Birth" navigator="true"
+						yearRange="c-90:c">
+					</p:calendar>
+
+
+					<h:outputLabel value="Mobile Number:" />
+					<p:inputText value="#{userBean.userT.mobileNumber}"
+						validatorMessage="Please enter a valid Mobile number">
+						<f:validateLongRange></f:validateLongRange>
+						<f:validateLength maximum="10"></f:validateLength>
+					</p:inputText>
+
+
+					<h:outputLabel value="Email Id:" />
+					<p:inputText value="#{userBean.userT.emailAddress}" required="true"
+						requiredMessage="Please enter e-mail Address"
+						validatorMessage="#{userBean.userT.emailAddress} is not a valid email message">
+						<f:validateRegex
+							pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					</p:inputText>
+
+
+					<p:spacer />
+					<p:separator></p:separator>
+
+
+
+					<p:spacer width="5" />
+					<p:spacer width="5" />
+
+
+					<h:outputText value="User Role:" styleClass="bold" />
+					<p:selectOneMenu value="#{userBean.userT.userRoleId}">
+						<f:selectItems value="#{appBean.roles}" />
+					</p:selectOneMenu>
+
+					<p:spacer />
+					<p:separator></p:separator>
+
+					<h:outputText value="User Credentials" styleClass="bold" />
+					<p:spacer width="5" />
+
+					<h:outputLabel value="Username:" />
+					<p:inputText value="#{userBean.userT.username}" required="true"
+						requiredMessage="Please enter a username"></p:inputText>
+
+					<h:outputLabel value="Password:" />
+					<p:inputText value="#{userBean.userT.password}" required="true"
+						requiredMessage="Please enter the password"></p:inputText>
+
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:panelGroup>
+					<p:commandButton value="Cancel" ajax="false" icon="ui-icon-cancel"
+						immediate="true" action="/" />
+					<p:spacer width="10" />
+					<p:commandButton value="Save" ajax="false" icon="ui-icon-check"
+						action="#{userBean.createNewUser}" />
+				</h:panelGroup>
+			</h:panelGrid>
+
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

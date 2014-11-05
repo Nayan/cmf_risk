@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{auditTypeBean.viewAllAuditTypes}"></f:event>
+		</f:metadata>
+		<h:form id="form" styleClass="big_form">
+
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="View Audit Types" url="#" />
+			</p:breadCrumb>
+
+			<p:spacer height="20"></p:spacer>
+
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="Available Audit Types" styleClass="h1" />
+			</h:panelGrid>
+
+			<p:spacer height="20"></p:spacer>
+			<p:messages autoUpdate="true"></p:messages>
+			<p:dataTable id="auditTypes" var="auditType"
+				value="#{auditTypeBean.auditTypeDTOs}" paginator="true" rows="10"
+				emptyMessage="No audits found with given criteria"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,50,100" editable="true">
+
+				<p:ajax event="rowEdit" update="@this"
+					listener="#{userBean.onRowEdit}" />
+
+
+				<p:column sortBy="#{auditType.name}" filterBy="#{auditType.name}"
+					headerText="Name" filterMatchMode="contains">
+					<h:outputText value="#{auditType.name}" />
+				</p:column>
+
+				<p:column sortBy="#{auditType.entityType.toString()}"
+					filterBy="#{auditType.entityType.toString()}"
+					headerText="Applies To" filterMatchMode="contains">
+					<h:outputText value="#{auditType.entityType.toString()}" />
+				</p:column>
+
+				<p:column headerText="Created By">
+					<h:outputText value="#{auditType.createdBy}" />
+				</p:column>
+
+				<p:column headerText="Created Date">
+					<h:outputText value="#{auditType.createdDate}" />
+
+				</p:column>
+
+				<p:column headerText="Updated By">
+					<h:outputText value="#{auditType.updatedBy}" />
+
+				</p:column>
+
+				<p:column headerText="Updated Date">
+					<h:outputText value="#{auditType.updatedDate}" />
+				</p:column>
+
+				<p:column style="width:50px">
+					<p:commandLink action="#{auditTypeBean.editAuditType(auditType.auditTypeId)}" immediate="true"
+						ajax="false">
+						<f:param name="id" value="#{auditType.auditTypeId}"></f:param>
+						<span class="ui-icon ui-icon-pencil"></span>
+					</p:commandLink>
+				</p:column>
+				<p:column style="width:50px">
+					<p:commandLink action="#{auditTypeBean.delete(auditType.auditTypeId)}" ajax="false"
+					update=":form">
+						<span class="ui-icon ui-icon-trash"></span>
+					</p:commandLink>
+				</p:column>
+				<p:column style="width:50px">
+					<p:commandLink action="view_audit_type" immediate="true"
+						ajax="false">
+						<f:param name="id" value="#{auditType.auditTypeId}"></f:param>
+						<span class="ui-icon ui-icon-search"></span>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

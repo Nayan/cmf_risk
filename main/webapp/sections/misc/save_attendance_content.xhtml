@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="viewLoanForm">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Select Attendance sheet"
+					url="enter_attendance.jsf" />
+				<p:menuitem value="Save Attendance sheet" url="#"></p:menuitem>
+			</p:breadCrumb>
+			<p:spacer width="20" />
+			<p:panel header="Enter Attendance Sheet"
+				styleClass="medium_input_table">
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value=" Branch :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{baseBean.branchId}" disabled="true">
+								<f:selectItems value="#{loginBean.branchOffices}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Date :" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="#{baseBean.meetingDate}" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+				<p:separator></p:separator>
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<p:dataTable id="auditQuestionsTable" var="meeting"
+					value="#{baseBean.meetingList}" styleClass="big_table_wide_left">
+
+					<p:column>
+						<h:outputText value="#{meeting.centerName}" />
+						<f:facet name="header">
+							<h:outputText value="Center Name" />
+						</f:facet>
+					</p:column>
+
+					<p:column>
+						<p:inputText size="3" value="#{meeting.membersPresent}"></p:inputText>
+						<f:facet name="header">
+							<h:outputText value="Members Present" />
+						</f:facet>	
+						<h:outputText value=" of " />
+						<p:inputText size="3" value="#{meeting.totalMembers}"
+							readonly="true"></p:inputText>
+					</p:column>
+
+				</p:dataTable>
+				<p:spacer height="25"></p:spacer>
+				<p:panelGrid cellpadding="25" columns="1"
+					styleClass="big_table_wide">
+					<h:panelGroup>
+						<p:commandButton action="enter_attendance.jsf" immediate="true"
+							value="Cancel" ajax="false" icon="ui-icon-cancel" />
+						<p:spacer width="20"></p:spacer>
+						<p:commandButton action="#{baseBean.saveBulkAttendance}"
+							value="Save" ajax="false" icon="ui-icon-check" />
+					</h:panelGroup>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

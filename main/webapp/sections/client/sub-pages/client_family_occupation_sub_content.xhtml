@@ -1,0 +1,226 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:panelGrid id="viewClientFamilyOccupationDetails"
+			rendered="#{customerBean.editFamilyOccupationDetailsFlag == false}">
+			<ui:include
+				src="/sections/client/sub-pages/edit-sub-pages/client_view_family_occupation_sub_content.xhtml" />
+			<p:panelGrid columns="3" cellspacing="25" styleClass="big_table_wide">
+				<f:facet name="footer">
+					<p:commandButton value="Edit" icon="ui-icon-pencil"
+						actionListener="#{customerBean.editFamilyOccupations}"
+						update=":form:clientSectionsTabView:clientFamilyOccupationSectionsTab" />
+					<p:spacer width="20px;" />
+				</f:facet>
+			</p:panelGrid>
+		</h:panelGrid>
+		<h:panelGrid id="editClientFamilyOccupationDetails"
+			rendered="#{customerBean.editFamilyOccupationDetailsFlag == true}">
+			<p:fieldset legend="Add a Family Occupation Details">
+				<p:panelGrid cellpadding="25" styleClass="no_margin"
+					style="width:100%">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="Occupation Type: " />
+							<p:selectOneMenu
+								value="#{customerBean.familyOccupation.occupationTypeId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.occupationTypes}"></f:selectItems>
+								<p:ajax
+									update=":form:clientSectionsTabView:editClientFamilyOccupationDetails"
+									listener="#{customerBean.handleFamilyOccupationTypeChange}"></p:ajax>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="Occupation Subtype:" />
+							<p:selectOneMenu
+								value="#{customerBean.familyOccupation.occupationSubTypeId}"
+								id="occupationSubTypeId">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{customerBean.occupationSubTypes}"></f:selectItems>
+								<p:ajax
+									update=":form:clientSectionsTabView:editClientFamilyOccupationDetails"
+									listener="#{customerBean.calculateFamilyOccupationValue}"></p:ajax>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText id="familyOccupationCalculatedIncome"
+								value="Annual Income: #{customerBean.familyOccupation.calculatedIncome}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText id="familyOccupationMultiplierLabel"
+								rendered="#{customerBean.familyOccupation.occupationSubTypeDTO.multiplierPresent}"
+								value="#{customerBean.familyOccupation.occupationSubTypeDTO.multiplierLabel} (Multiplier):  " />
+
+							<p:inputText
+								rendered="#{customerBean.familyOccupation.occupationSubTypeDTO.multiplierPresent}"
+								value="#{customerBean.familyOccupation.multiplierValue}">
+								<p:ajax
+									listener="#{customerBean.calculateFamilyOccupationValue}"
+									update=":form:clientSectionsTabView:familyOccupationCalculatedIncome"></p:ajax>
+							</p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText value="Additional Details" styleClass="bold"
+								rendered="#{customerBean.familyOccupation.occupationSubTypeDTO.additionalFieldPresent}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText
+								rendered="#{customerBean.familyOccupation.occupationSubTypeDTO.additionalFieldPresent}"
+								value="#{customerBean.familyOccupation.occupationSubTypeDTO.additionalFieldLabel}:" />
+							<p:inputText
+								value="#{customerBean.familyOccupation.additionalFieldValue}"
+								rendered="#{customerBean.familyOccupation.occupationSubTypeDTO.additionalFieldPresent}"></p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText value="Income Lumping Details" styleClass="bold"
+								rendered="#{customerBean.familyOccupation.occupationSubTypeDTO.incomeLumpingRequired == true}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<p:panelGrid cellpadding="25" styleClass="no_margin"
+								rendered="#{customerBean.familyOccupation.occupationSubTypeDTO.incomeLumpingRequired == true}">
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Jan" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="Feb" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="March" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="April" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.jan}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.feb}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.march}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.april}"></p:inputText>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="May" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="June" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="July" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="August" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.may}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.june}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.july}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.august}"></p:inputText>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="September" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="October" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="November" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="December" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.sept}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.october}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.nov}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.familyOccupation.incomeLumpingDTO.december}"></p:inputText>
+									</p:column>
+								</p:row>
+
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+			</p:fieldset>
+			<p:panelGrid columns="1" styleClass="button_right_align">
+				<p:commandButton
+					actionListener="#{customerBean.addFamilyOccupation}"
+					icon="ui-icon-circle-plus" value="Add"
+					update=":form:clientSectionsTabView:editClientFamilyOccupationDetails"></p:commandButton>
+			</p:panelGrid>
+			
+			<ui:include
+				src="/sections/client/sub-pages/edit-sub-pages/client_edit_family_occupation_sub_content.xhtml" />
+				
+			<p:panelGrid columns="3" cellspacing="25" styleClass="big_table_wide">
+				<f:facet name="footer">
+					<p:commandButton value="Cancel Edit" icon="ui-icon-trash"
+						actionListener="#{customerBean.cancelEditFamilyOccupations}"
+						update=":form:clientSectionsTabView:clientFamilyOccupationSectionsTab" />
+					<p:spacer width="20px;" />
+					<p:commandButton value="Save" icon="ui-icon-check"
+						actionListener="#{customerBean.saveOrUpdateFamilyOccupations}"
+						update=":form:clientSectionsTabView:clientFamilyOccupationSectionsTab" />
+				</f:facet>
+			</p:panelGrid>
+		</h:panelGrid>
+	</ui:composition>
+</h:body>
+</html>

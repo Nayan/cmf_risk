@@ -1,0 +1,15 @@
+===============================Tomcat Development============================
+
+=> under apache-tomcat-7.0.21\conf
+
+	edit tomcat-users.xml and add the following
+  <role rolename="tomcat"/>
+  <role rolename="role1"/>
+  <role rolename="manager-gui"/>
+  <user username="tomcat" password="tomcat" roles="tomcat"/>
+  <user username="both" password="tomcat" roles="tomcat,role1"/>
+  <user username="role1" password="tomcat" roles="role1"/>
+  <user username="admin" password="" roles="manager-gui"/>
+  
+=> edit server.xml by adding readonly="true" for Resource auth="Container" during development so that it does not keep editing tomcat-users.xml
+

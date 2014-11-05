@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:panelGrid id="viewClientLoanDetails"
+			rendered="#{customerBean.editLoansFromOtherMFIFlag == false}">
+			<ui:include
+				src="/sections/client/sub-pages/edit-sub-pages/client_view_loans_sub_content.xhtml" />
+			<p:panelGrid columns="3" cellspacing="25" styleClass="big_table_wide">
+				<f:facet name="footer">
+					<p:commandButton value="Edit" icon="ui-icon-pencil"
+						actionListener="#{customerBean.editExternalLoans}"
+						update=":form:clientSectionsTabView:clientLoanDetailsSectionsTab" />
+					<p:spacer width="20px;" />
+					<p:commandButton value="Mark As Updated" icon="ui-icon-check" />
+				</f:facet>
+			</p:panelGrid>
+		</h:panelGrid>
+		<h:panelGrid id="editClientLoanDetails"
+			rendered="#{customerBean.editLoansFromOtherMFIFlag == true}">
+			<p:fieldset legend="Add a new Loan Details">
+				<p:panelGrid cellpadding="25" styleClass="no_margin"
+					style="width:100%">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="MFI Name: " />
+							<p:selectOneMenu
+								value="#{customerBean.externalLoan.externalOrganizationId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.externalOrganizations}"></f:selectItems>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="Loan Status: " />
+							<p:selectOneMenu value="#{customerBean.externalLoan.status}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItem itemLabel="Active" itemValue="active" />
+								<f:selectItem itemLabel="Written Off" itemValue="written off" />
+								<f:selectItem itemLabel="Closed" itemValue="closed" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="Outstanding Amount: " />
+							<p:inputText value="#{customerBean.externalLoan.pendingAmount}">
+							</p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="Loan Amount: " />
+							<p:inputText value="#{customerBean.externalLoan.loanAmount}">
+							</p:inputText>
+						</p:column>
+						
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+			<p:panelGrid columns="1" styleClass="button_right_align">
+				<p:commandButton actionListener="#{customerBean.addExternalLoan}"
+					icon="ui-icon-circle-plus" value="Add"
+					update=":form:clientSectionsTabView:editClientLoanDetails"></p:commandButton>
+			</p:panelGrid>
+
+			<ui:include
+				src="/sections/client/sub-pages/edit-sub-pages/client_edit_loans_sub_content.xhtml" />
+			<p:panelGrid columns="3" cellspacing="25" styleClass="big_table_wide">
+				<f:facet name="footer">
+					<p:commandButton value="Cancel Edit" icon="ui-icon-trash"
+						actionListener="#{customerBean.cancelEditExternalLoans}"
+						update=":form:clientSectionsTabView:clientLoanDetailsSectionsTab" />
+					<p:spacer width="20px;" />
+					<p:commandButton value="Save" icon="ui-icon-check"
+						actionListener="#{customerBean.saveExternalLoans}"
+						update=":form:clientSectionsTabView:clientLoanDetailsSectionsTab" />
+				</f:facet>
+			</p:panelGrid>
+		</h:panelGrid>
+	</ui:composition>
+</h:body>
+</html>

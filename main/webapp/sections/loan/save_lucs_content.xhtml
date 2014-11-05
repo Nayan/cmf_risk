@@ -1,0 +1,148 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Select Pending LUC's" url="pending_lucs.jsf" />
+				<p:menuitem
+					value="LUC's for #{loanBean.centerName}(#{loanBean.branchName})"
+					url="#"></p:menuitem>
+			</p:breadCrumb>
+			<p:spacer height="20" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<p:spacer height="20" />
+			<h:panelGrid columns="2" cellspacing="20 20 20 20">
+				<h:outputText value="Selected Branch:" styleClass="bold" />
+				<h:outputText value="#{loanBean.branchName}" />
+				<h:outputText value="Selected Center:" styleClass="bold" />
+				<h:outputText value="#{loanBean.centerName}" />
+			</h:panelGrid>
+			<p:separator></p:separator>
+			<p:spacer height="20"></p:spacer>
+
+			<p:dataTable var="luc" value="#{loanBean.loanUtilizationChecks}"
+				paginator="true" rows="10"
+				emptyMessage="No Loan Utilization Checks found with given criteria"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,50,100" editable="true">
+
+				<p:ajax event="rowEdit" update="@this" ajax="false"
+					listener="#{loanBean.saveLoanUtilizationCheck}"
+					oncomplete="javascript:location.reload(true)" />
+
+
+				<p:column sortBy="#{luc.customerName}"
+					filterBy="#{luc.customerName}" headerText="Customer Name"
+					filterMatchMode="contains">
+					<h:outputText value="#{luc.customerName}" />
+				</p:column>
+
+				<p:column sortBy="#{luc.loanProductName}"
+					filterBy="#{luc.loanProductName}" headerText="Loan Product"
+					filterMatchMode="contains">
+					<h:outputText value="#{luc.loanProductName}" />
+				</p:column>
+
+				<p:column sortBy="#{luc.loanAmount}" filterBy="#{luc.loanAmount}"
+					headerText="Loan Amount" filterMatchMode="contains">
+					<h:outputText value="#{luc.loanAmount}" />
+				</p:column>
+
+				<p:column sortBy="#{luc.loanPurpose}" filterBy="#{luc.loanPurpose}"
+					headerText="Stated Purpose" filterMatchMode="contains">
+					<h:outputText value="#{luc.loanPurpose}" />
+				</p:column>
+
+
+				<p:column headerText="Primary Purpose">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{luc.loanPurposeName1}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{luc.loanPurposeId1}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.loanPurposes}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Amount used">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{luc.utilizationPercentage1}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{luc.utilizationPercentage1}"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Purpose 2">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{luc.loanPurposeName2}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{luc.loanPurposeId2}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.loanPurposes}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Amount used">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{luc.utilizationPercentage2}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{luc.utilizationPercentage2}"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Purpose 3">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{luc.loanPurposeName3}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{luc.loanPurposeId3}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.loanPurposes}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Amount used">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{luc.utilizationPercentage3}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{luc.utilizationPercentage3}"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+
+				<p:column style="width:50px">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

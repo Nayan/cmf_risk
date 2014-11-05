@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="#{auditBean.entityName}"
+					url="/pages/view_employee.jsf?id=#{auditBean.entityId}"
+					rendered="#{auditBean.entityType.entityId == 1}">
+				</p:menuitem>
+				<p:menuitem value="#{auditBean.entityName}"
+					url="/pages/view_employee.jsf?id=#{auditBean.entityId}"
+					rendered="#{auditBean.entityType.entityId == 2}">
+				</p:menuitem>
+				<p:menuitem value="#{auditBean.entityName}"
+					action="#{centerBean.viewCenter(auditBean.entityId)}"
+					rendered="#{auditBean.entityType.entityId == 3}"></p:menuitem>
+				<p:menuitem value="Attach an Audit" url="#" />
+			</p:breadCrumb>
+			<p:spacer width="20" />
+			<p:panel header="Attach an audit" styleClass="medium_input_table">
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Select an Audit Process :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{auditBean.auditTypeId}">
+								<f:selectItems value="#{auditBean.auditTypesMap}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<p:spacer height="40px"></p:spacer>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<p:commandButton
+								action="#{centerBean.viewCenter(baseBean.selectedCenter.customerId)}"
+								value="Cancel" ajax="false"
+								rendered="#{auditBean.entityType.entityId == 3}"
+								icon="ui-icon-cancel" />
+							<p:commandButton action="/pages/view_employee.jsf"
+								value="Cancel" ajax="false"
+								rendered="#{auditBean.entityType.entityId == 1}"
+								immediate="true" icon="ui-icon-cancel">
+								<f:param name="id" value="#{auditBean.entityId}"></f:param>
+							</p:commandButton>
+						</p:column>
+						<p:column colspan="1">
+							<p:commandButton action="#{auditBean.startAuditProcess}"
+								value="Continue" ajax="false" icon="ui-icon-check" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,188 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+
+		<p:breadCrumb>
+			<p:menuitem value="Categories" url="/" />
+			<p:menuitem
+				value="#{customerBean.customerT.firstName} #{customerBean.customerT.lastName}"
+				url="#" />
+			<p:menuitem value="View Details" url="#" />
+		</p:breadCrumb>
+		<h:form id="form" styleClass="big_form" prependId="false">
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="View Customer Details" styleClass="h1" />
+			</h:panelGrid>
+			<h:panelGrid columns="1" styleClass="big_table_wide_left">
+				<h:panelGroup>
+					<p:commandLink ajax="false" immediate="true"
+						action="#{customerBean.navigateToEditCustomerPage}">
+						<h:graphicImage library="images" name="edit.png" />
+						<h:outputText value="Edit" />
+					</p:commandLink>
+					<p:spacer width="10"></p:spacer>
+					<p:commandButton value="Print" type="button" icon="ui-icon-print">
+						<p:printer target="customerPanel" />
+					</p:commandButton>
+				</h:panelGroup>
+			</h:panelGrid>
+
+			<p:spacer height="3" />
+			<h:panelGrid columns="2" id="customerPanel"
+				styleClass="big_table_left">
+
+
+				<h:panelGrid columns="2" id="customerDetailsPanel"
+					styleClass="big_table_left" style="width:50%">
+					<h:panelGroup id="photo"
+						rendered="#{customerBean.customerT.customerImage != null}">
+						<p:graphicImage style="width:200px"
+							value="#{customerBean.customerT.customerImage}" />
+					</h:panelGroup>
+					<h:graphicImage library="images" name="anonymous.png"
+						style="width:100px"
+						rendered="#{customerBean.customerT.customerImage == null}" />
+					<h:panelGrid columns="2" styleClass="big_table_left">
+
+						<h:panelGrid columns="2" styleClass="big_table_left">
+							<h:outputText value="First Name:" />
+
+							<h:panelGroup>
+								<h:outputText value="#{customerBean.customerT.firstName}"></h:outputText>
+								<h:outputLabel value="Last Name:" />
+								<h:outputText value="#{customerBean.customerT.lastName}"></h:outputText>
+							</h:panelGroup>
+
+							<h:outputLabel value="Government Id:" />
+							<h:outputText value="#{customerBean.customerT.governmentId}"></h:outputText>
+
+							<h:outputLabel value="Sex:" />
+							<h:outputText value="#{customerBean.customerT.gender}"></h:outputText>
+
+							<h:outputLabel value="Customer Number:" />
+							<h:outputText value="#{customerBean.customerT.externalId}"></h:outputText>
+
+						</h:panelGrid>
+
+					</h:panelGrid>
+
+					<p:separator></p:separator>
+					<p:separator></p:separator>
+
+					<h:outputText value="Pledge Records:" styleClass="bold" />
+					<p:spacer height="30" />
+
+					<p:spacer />
+					<p:dataList value="#{customerBean.customerT.pledgeTs}"
+						var="pledgeT">
+						<p:column>
+							<p:commandButton value="#{pledgeT.pledgeNumber}" ajax="false"
+								action="#{pledgeBean.viewPledge(pledgeT.id)}" process="@this" />
+						</p:column>
+					</p:dataList>
+
+					<p:separator></p:separator>
+					<p:separator></p:separator>
+
+
+
+
+					<h:outputText value="Other Information" styleClass="bold" />
+					<p:spacer height="30" />
+
+
+					<h:outputLabel value="Date of Birth:" />
+					<h:outputText value="#{customerBean.customerT.dateOfBirth}">
+						<f:convertDateTime pattern="dd-MM-yyyy" timeZone="GMT+5:30" />
+					</h:outputText>
+
+
+					<h:outputLabel value="Mobile Number:" />
+					<h:outputText value="#{customerBean.customerT.mobileNumber}"></h:outputText>
+
+
+					<p:spacer />
+					<p:spacer />
+
+
+					<h:outputText value="Current Address" styleClass="bold" />
+					<p:spacer height="30" />
+
+
+					<h:outputLabel value="Address Line 1:" />
+					<h:outputText style="width:200px"
+						value="#{customerBean.customerT.temporaryAddress.line1}"></h:outputText>
+
+					<h:outputLabel value="Address Line 2:" />
+					<h:outputText style="width:200px"
+						value="#{customerBean.customerT.temporaryAddress.line2}"></h:outputText>
+
+					<h:outputLabel value="Zipcode:" />
+					<h:panelGroup>
+						<h:outputText
+							value="#{customerBean.customerT.temporaryAddress.zip}"></h:outputText>
+
+						<h:outputLabel value="Village:" />
+						<h:outputText
+							value="#{customerBean.customerT.temporaryAddress.village}"></h:outputText>
+
+						<h:outputLabel value="City/District:" />
+						<h:outputText
+							value="#{customerBean.customerT.temporaryAddress.city}"></h:outputText>
+
+						<h:outputLabel value="State:" />
+						<h:outputText
+							value="#{customerBean.customerT.temporaryAddress.state}"></h:outputText>
+					</h:panelGroup>
+
+					<p:spacer />
+					<p:spacer />
+
+
+					<h:outputText value="Permanent Address" styleClass="bold" />
+					<p:spacer height="30" />
+
+
+					<h:outputLabel value="Address Line 1:" />
+					<h:outputText style="width:200px"
+						value="#{customerBean.customerT.permanentAddress.line1}"></h:outputText>
+
+					<h:outputLabel value="Address Line 2:" />
+					<h:outputText style="width:200px"
+						value="#{customerBean.customerT.permanentAddress.line2}"></h:outputText>
+
+					<h:outputLabel value="Zipcode:" />
+					<h:panelGroup>
+						<h:outputText
+							value="#{customerBean.customerT.permanentAddress.zip}"></h:outputText>
+
+						<h:outputLabel value="Village:" />
+						<h:outputText
+							value="#{customerBean.customerT.permanentAddress.village}"></h:outputText>
+
+						<h:outputLabel value="City/District:" />
+						<h:outputText
+							value="#{customerBean.customerT.permanentAddress.city}"></h:outputText>
+
+						<h:outputLabel value="State:" />
+						<h:outputText
+							value="#{customerBean.customerT.permanentAddress.state}"></h:outputText>
+					</h:panelGroup>
+				</h:panelGrid>
+
+				<p:panel header="Pledge Management" style="width:70%;height:30%">
+					<h:commandLink value="Attach a Pledge"
+						action="#{pledgeBean.navigateToNewPledgePage(customerBean.customerT.id,customerBean.customerT.firstName,customerBean.customerT.lastName)}" />
+				</p:panel>
+
+			</h:panelGrid>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

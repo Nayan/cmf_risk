@@ -1,0 +1,173 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<ui:repeat var="occupation"
+			value="#{customerBean.customer.familyOccupationDTOs}"
+			varStatus="count">
+			<h:panelGrid columns="2">
+				<h:column>
+					<p:fieldset legend="Family Occupation #{count.index + 1}">
+						<p:panelGrid cellpadding="25" styleClass="no_margin"
+							style="width:100%">
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText
+										value="Occupation Type: #{occupation.occupationTypeDTO.name}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="Occupation Subtype: #{occupation.occupationSubTypeDTO.name}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="Annual Income: #{occupation.calculatedIncome}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText rendered="#{occupation.multiplierPresent}"
+										value="#{occupation.occupationSubTypeDTO.multiplierLabel} (Multiplier): #{occupation.multiplierValue} " />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText value="Additional Details" styleClass="bold"
+										rendered="#{occupation.occupationSubTypeDTO.additionalFieldPresent}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="3">
+									<h:outputText
+										rendered="#{occupation.occupationSubTypeDTO.additionalFieldPresent}"
+										value="#{occupation.occupationSubTypeDTO.additionalFieldLabel}: #{occupation.additionalFieldValue}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panelGrid cellpadding="25" styleClass="table_border_1px"
+							rendered="#{occupation.occupationSubTypeDTO.incomeLumpingRequired == true}">
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText value="Jan" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="Feb" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="March" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="April" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="May" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="June" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.jan}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.feb}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.march}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.april}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.may}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.june}"></h:outputText>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="6">
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText value="July" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="August" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="September" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="October" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="November" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="December" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.july}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.august}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.sept}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.october}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.nov}"></h:outputText>
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="#{occupation.incomeLumpingDTO.december}"></h:outputText>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:fieldset>
+				</h:column>
+				<h:column>
+					<p:panelGrid columns="1" cellspacing="25"
+						styleClass="big_table_wide"
+						rendered="#{customerBean.editFamilyOccupationDetailsFlag == true}">
+						<f:facet name="footer">
+							<p:commandLink
+								action="#{customerBean.removeFamilyOccupation(count.index)}"
+								ajax="false"
+								update=":form:clientSectionsTabView:clientFamilyOccupationSectionsTab">
+								<h:graphicImage library="images" name="delete-1.png" />
+							</p:commandLink>
+						</f:facet>
+					</p:panelGrid>
+				</h:column>
+			</h:panelGrid>
+			<p:spacer height="20"></p:spacer>
+		</ui:repeat>
+	</ui:composition>
+</h:body>
+</html>

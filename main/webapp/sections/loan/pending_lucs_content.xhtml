@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Select Pending LUC's" url="#" />
+			</p:breadCrumb>
+			<p:spacer width="20" />
+			<p:panel header="Select A Branch" styleClass="medium_input_table">
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Select a Branch :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{loanBean.branchId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{loginBean.branchOffices}" />
+								<p:ajax update=":form:lucCenters"
+									listener="#{loanBean.populateCentersWithPendingLUCs}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:spacer height="20"></p:spacer>
+				<p:separator></p:separator>
+				<p:spacer height="10"></p:spacer>
+				<p:dataTable id="lucCenters" var="center"
+					value="#{loanBean.centers}" styleClass="big_table_wide_left">
+
+					<p:column headerText="Center Name">
+						<h:outputText value="#{center.displayName}" />
+					</p:column>
+					<p:column style="width:30px">
+						<p:commandButton icon="ui-icon-search" ajax="false"
+							action="#{loanBean.populatePendingLUCs(center.customerId)}">
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

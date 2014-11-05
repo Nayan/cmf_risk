@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition template="/templates/simpleMasterLayout.xhtml">
+		<ui:define name="windowTitle">
+			<h:outputText value="Reports" />
+		</ui:define>
+
+		<ui:define name="heading">
+			<ui:include src="/sections/home/header.xhtml" />
+		</ui:define>
+
+
+		<ui:define name="content">
+			<h:form>
+				<p:panel styleClass="big_table_wide" header="Reports">
+					<h:panelGrid columns="3" styleClass="big_table_wide">
+						<h:outputText value="Click a Report below to begin" />
+					</h:panelGrid>
+
+					<p:spacer height="30"></p:spacer>
+					<p:separator></p:separator>
+
+					<h:panelGrid columns="2" styleClass="big_table">
+
+						<h:outputText value="Admin" styleClass="bold" />
+						<h:outputText value="Operations" styleClass="bold" />
+
+						<p:spacer height="20"></p:spacer>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Repayment Capacity Report"
+							outcome="/reports/repayment_capacity_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Repayment Capacity Detail Report"
+							outcome="/reports/repayment_capacity_detail_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Center Wise Attendace Report"
+							outcome="/reports/center_wise_attendace_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Branch Wise Attendace Report"
+							outcome="/reports/branch_wise_attendace_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Monthly Branch Wise Attendace Report"
+							outcome="/reports/monthly_branch_wise_attendace_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Branch Wise Loan Utilisation Summary Report"
+							outcome="/reports/branch_wise_loan_utilisation_summary_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Center Assesment Report"
+							outcome="/reports/center_assesment_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Income Assesment Report"
+							outcome="/reports/income_assesment_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Loan Utilisation Report"
+							outcome="/reports/loan_utilisation_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Monthly Loan Utilisation Report"
+							outcome="/reports/monthly_loan_utilisation_summary_report.jsf">
+						</h:link>
+						<p:spacer height="20"></p:spacer>
+						<h:link value="Audit Report"
+							outcome="/reports/audit_report.jsf">
+						</h:link>
+						
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
+

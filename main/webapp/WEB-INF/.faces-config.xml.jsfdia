@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
+  SHAPE="192,112,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#login.xhtml:0" NAME="item"
+   PATH="/login.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#pages#home.xhtml" NAME="output"
+    PATH="/pages/home.xhtml" TARGET="rules:#pages#home.xhtml"
+    TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="unauthorized::#login.xhtml" NAME="output1"
+    PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="unauthorized" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,337,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="error::#error.xhtml" NAME="output"
+    PATH="/error.xhtml" TARGET="rules:#error.xhtml" TITLE="error" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="home::#pages#home.xhtml" NAME="output1"
+    PATH="/pages/home.xhtml" TARGET="rules:#pages#home.xhtml"
+    TITLE="home" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="admin::#admin#admin_main.xhtml"
+    NAME="output2" PATH="/admin/admin_main.xhtml"
+    TARGET="rules:#admin#admin_main.xhtml" TITLE="admin" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="create_user::#admin#create_user.xhtml"
+    NAME="output3" PATH="/admin/create_user.xhtml"
+    TARGET="rules:#admin#create_user.xhtml" TITLE="create_user" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="view_user::#admin#view_user.xhtml"
+    NAME="output4" PATH="/admin/view_user.xhtml"
+    TARGET="rules:#admin#view_user.xhtml" TITLE="view_user" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="view_users::#admin#view_users.xhtml"
+    NAME="output5" PATH="/admin/view_users.xhtml"
+    TARGET="rules:#admin#view_users.xhtml" TITLE="view_users" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#error.xhtml" PATH="/error.xhtml"
+  SHAPE="240,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#home.xhtml" PATH="/pages/home.xhtml"
+  SHAPE="408,176,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#view_user.xhtml"
+  PATH="/admin/view_user.xhtml" SHAPE="272,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#create_user.xhtml"
+  PATH="/admin/create_user.xhtml" SHAPE="272,689,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#view_users.xhtml"
+  PATH="/admin/view_users.xhtml" SHAPE="288,721,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#admin_main.xhtml"
+  PATH="/admin/admin_main.xhtml" SHAPE="304,289,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::1" SHAPE="32,657,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::1" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="view_all_audit_types::#admin#view_audit_types.xhtml"
+    NAME="output" PATH="/admin/view_audit_types.xhtml"
+    TARGET="rules:#admin#view_audit_types.xhtml"
+    TITLE="view_all_audit_types" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="view_audit_type::#admin#view_audit_type.xhtml" NAME="output1"
+    PATH="/admin/view_audit_type.xhtml"
+    TARGET="rules:#admin#view_audit_type.xhtml" TITLE="view_audit_type" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#admin#view_audit_types.xhtml"
+  PATH="/admin/view_audit_types.xhtml" SHAPE="240,1009,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#view_audit_type.xhtml"
+  PATH="/admin/view_audit_type.xhtml" SHAPE="256,1041,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::2" SHAPE="32,1249,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::2" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="save_attendance_sheet::#pages#save_attendance.xhtml"
+    NAME="output" PATH="/pages/save_attendance.xhtml"
+    TARGET="rules:#pages#save_attendance.xhtml"
+    TITLE="save_attendance_sheet" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#save_attendance.xhtml"
+  PATH="/pages/save_attendance.xhtml" SHAPE="240,1489,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::3" SHAPE="32,1697,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::3" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="audits_in_progress::#audits#audits_in_progress.xhtml"
+    NAME="output" PATH="/audits/audits_in_progress.xhtml"
+    TARGET="rules:#audits#audits_in_progress.xhtml"
+    TITLE="audits_in_progress" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="attach_an_audit::#audits#attach_audit.xhtml"
+    NAME="output1" PATH="/audits/attach_audit.xhtml"
+    TARGET="rules:#audits#attach_audit.xhtml" TITLE="attach_an_audit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="audit_process::#audits#audit_process.xhtml"
+    NAME="output2" PATH="/audits/audit_process.xhtml"
+    TARGET="rules:#audits#audit_process.xhtml" TITLE="audit_process" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="closed_audit_process::#audits#closed_audit_process.xhtml"
+    NAME="output3" PATH="/audits/closed_audit_process.xhtml"
+    TARGET="rules:#audits#closed_audit_process.xhtml"
+    TITLE="closed_audit_process" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#audits#audits_in_progress.xhtml"
+  PATH="/audits/audits_in_progress.xhtml" SHAPE="288,1937,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#audits#audit_process.xhtml"
+  PATH="/audits/audit_process.xhtml" SHAPE="288,1937,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#audits#attach_audit.xhtml"
+  PATH="/audits/attach_audit.xhtml" SHAPE="288,1937,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::4" SHAPE="32,657,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::4" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="view_center::#pages#view_center.xhtml"
+    NAME="output" PATH="/pages/view_center.xhtml"
+    TARGET="rules:#pages#view_center.xhtml" TITLE="view_center" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="view_center_meetings::#pages#center_attendance_history.xhtml"
+    NAME="output1" PATH="/pages/center_attendance_history.xhtml"
+    TARGET="rules:#pages#center_attendance_history.xhtml"
+    TITLE="view_center_meetings" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#center_attendance_history.xhtml"
+  PATH="/pages/center_attendance_history.xhtml" SHAPE="256,2369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#view_center.xhtml"
+  PATH="/pages/view_center.xhtml" SHAPE="256,2369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#audits#closed_audit_process.xhtml"
+  PATH="/audits/closed_audit_process.xhtml" SHAPE="288,1937,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::5" SHAPE="32,2689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::5" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="save_lucs::#pages#save_lucs.xhtml"
+    NAME="output" PATH="/pages/save_lucs.xhtml"
+    TARGET="rules:#pages#save_lucs.xhtml" TITLE="save_lucs" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#save_lucs.xhtml"
+  PATH="/pages/save_lucs.xhtml" SHAPE="240,3041,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

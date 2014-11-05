@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<p:breadCrumb>
+			<p:menuitem value="Home" url="/" />
+			<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+			<p:menuitem value="View A User" url="#" />
+		</p:breadCrumb>
+
+
+		<h:form id="form" styleClass="big_form">
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="View a User" styleClass="h1" />
+			</h:panelGrid>
+			<h:panelGrid columns="1" id="newCustomerPanel"
+				styleClass="big_table_left">
+
+
+				<h:panelGrid columns="3" id="customerDetailsPanel"
+					styleClass="big_table_left_tall">
+
+					<h:outputText value="Office Details" styleClass="bold" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<h:outputLabel value="Office:" />
+					<p:spacer width="20" />
+					<h:outputText value="#{userBean.userT.officeDTO.name}" />
+
+
+					<p:spacer />
+					<p:separator></p:separator>
+					<p:separator></p:separator>
+
+
+					<h:outputText value="Client Details" styleClass="bold" />
+					<p:spacer />
+					<p:spacer />
+
+					<h:outputText value="First Name:" />
+					<p:spacer width="20" />
+
+					<h:panelGroup>
+						<h:outputText value="#{userBean.userT.firstName}" />
+						<p:spacer width="10" />
+						<h:outputLabel value="Last Name:" />
+						<h:outputText value="#{userBean.userT.lastName}" />
+					</h:panelGroup>
+
+					<h:outputLabel value="Government Id:" />
+					<p:spacer width="20" />
+					<h:outputText value="#{userBean.userT.governmentId}" />
+
+					<h:outputLabel value="Sex:" />
+					<p:spacer width="20" />
+					<h:outputText value="#{userBean.userT.gender}" />
+
+
+					<h:outputLabel value="Date of Birth:" />
+					<p:spacer width="20" />
+					<h:outputText value="#{userBean.userT.dateOfBirth}">
+						<f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+					</h:outputText>
+
+
+					<h:outputLabel value="Mobile Number:" />
+					<p:spacer width="20" />
+					<h:outputText value="#{userBean.userT.mobileNumber}" />
+
+
+					<h:outputLabel value="Email Id:" />
+					<p:spacer width="20" />
+					<h:outputText value="#{userBean.userT.emailAddress}" />
+
+					<h:outputLabel value="User Role:" />
+					<p:spacer width="20" />
+					<h:outputText value="#{userBean.userT.userRoleT.toString()}" />
+
+					<p:spacer />
+					<p:separator></p:separator>
+					<p:separator></p:separator>
+
+					<p:spacer width="5" />
+					<p:spacer width="5" />
+					<p:spacer width="5" />
+				</h:panelGrid>
+
+
+			</h:panelGrid>
+
+
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

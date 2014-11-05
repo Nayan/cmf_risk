@@ -1,0 +1,359 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="Create Occupation Sub-Types" />
+			</p:breadCrumb>
+			<p:spacer height="20px;" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true" />
+			<p:spacer height="20px;" />
+
+			<p:panel header="Create Occupation Sub-Types"
+				styleClass="medium_input_table">
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Occupation Type :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{occupationTypeBean.occupationTypeId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.occupationTypes}" />
+								<p:ajax update=":form:occupationSubTypesPanel"
+									listener="#{occupationTypeBean.populateOccupationSubTypes}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Branch :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{occupationTypeBean.officeId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{loginBean.branchOffices}" />
+								<p:ajax update=":form:occupationSubTypesPanel"
+									listener="#{occupationTypeBean.populateOccupationSubTypes}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:separator />
+				<h:outputText value="Create a New SubType" />
+				<p:panelGrid id="newOccupationSubTypePanel">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Name :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:inputText id="name"
+								value="#{occupationTypeBean.occupationSubTypeDTO.name}"
+								required="true" label="Name">
+								<f:validateLength minimum="3" />
+							</p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Requires a Multiplier Field? " />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectBooleanCheckbox
+								value="#{occupationTypeBean.occupationSubTypeDTO.multiplierPresent}">
+								<p:ajax
+									update=":form:multiplierLabelText,:form:multiplierLabelInput"
+									event="change" />
+							</p:selectBooleanCheckbox>
+
+						</p:column>
+						<p:column colspan="1" styleClass="right">
+							<h:panelGroup id="multiplierLabelText">
+								<h:outputText value="Multiplier Field Label :"
+									rendered="#{occupationTypeBean.occupationSubTypeDTO.multiplierPresent}" />
+							</h:panelGroup>
+						</p:column>
+						<p:column colspan="1">
+							<h:panelGroup id="multiplierLabelInput">
+								<p:inputText id="mfl"
+									rendered="#{occupationTypeBean.occupationSubTypeDTO.multiplierPresent}"
+									value="#{occupationTypeBean.occupationSubTypeDTO.multiplierLabel}"
+									required="true" label="Mfl"
+									validatorMessage="Multiplier field should be atleast three characters long"
+									requiredMessage="Please enter the multiplier field label">
+									<f:validateLength minimum="3" />
+								</p:inputText>
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Requires an Additional Field? " />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectBooleanCheckbox
+								value="#{occupationTypeBean.occupationSubTypeDTO.additionalFieldPresent}">
+								<p:ajax
+									update=":form:additionalFieldLabelInput,:form:additionalFieldLabelText"
+									event="change" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column colspan="1" styleClass="right">
+							<h:panelGroup id="additionalFieldLabelText">
+								<h:outputText value="Additional Field Label :"
+									rendered="#{occupationTypeBean.occupationSubTypeDTO.additionalFieldPresent}" />
+							</h:panelGroup>
+						</p:column>
+						<p:column colspan="1">
+							<h:panelGroup id="additionalFieldLabelInput">
+								<p:inputText id="afl"
+									rendered="#{occupationTypeBean.occupationSubTypeDTO.additionalFieldPresent}"
+									value="#{occupationTypeBean.occupationSubTypeDTO.additionalFieldLabel}"
+									required="true" label="afl"
+									validatorMessage="Additional field should be atleast three characters long"
+									requiredMessage="Please enter the additional field label">
+									<f:validateLength minimum="3" />
+								</p:inputText>
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Requires Income Lumping? " />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectBooleanCheckbox
+								value="#{occupationTypeBean.occupationSubTypeDTO.incomeLumpingRequired}">
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Stability Factor :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu
+								value="#{occupationTypeBean.occupationSubTypeDTO.stabilityFactor}">
+								<f:selectItems value="#{occupationTypeBean.stabilityFactors}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Annual Income :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:inputText id="annualincome"
+								value="#{occupationTypeBean.occupationSubTypeDTO.annualIncome}"
+								required="true" label="annualincome"
+								requiredMessage="Please enter a valid Numerical value for Annual Income">
+								<f:validateDoubleRange minimum="0"></f:validateDoubleRange>
+							</p:inputText>
+						</p:column>
+
+					</p:row>
+				</p:panelGrid>
+
+				<p:spacer height="30px" />
+
+				<p:panelGrid columns="3" cellspacing="25"
+					styleClass="big_table_wide">
+					<f:facet name="footer">
+						<p:commandButton value="Clear" icon="ui-icon-trash"
+							immediate="true"
+							actionListener="#{occupationTypeBean.resetOccupationSubType}"
+							update=":form:newOccupationSubTypePanel" />
+						<p:spacer width="20px;" />
+						<p:commandButton value="Submit" icon="ui-icon-check"
+							actionListener="#{occupationTypeBean.addOccupationSubType}"
+							update=":form:occupationSubTypesPanel,:form:newOccupationSubTypePanel" />
+					</f:facet>
+				</p:panelGrid>
+				<p:spacer height="20px;"></p:spacer>
+				<p:separator />
+				<p:spacer height="20px;"></p:spacer>
+			</p:panel>
+
+			<p:spacer height="20"></p:spacer>
+
+			<p:separator></p:separator>
+			<p:commandButton value="Print Occupation Subtype Details"
+				type="button" icon="ui-icon-print">
+				<p:printer target="occupationSubTypesPanel" />
+			</p:commandButton>
+			<p:panel id="occupationSubTypesPanel">
+				<h:outputText value="Available Occupation subtypes"
+					styleClass="bold" />
+				<p:dataTable id="occupationSubTypes" var="occupationSubType"
+					value="#{occupationTypeBean.occupationSubTypes}" editable="true">
+
+					<p:ajax event="rowEdit" update="@this"
+						listener="#{occupationTypeBean.editOccupationSubType}" />
+
+					<p:column headerText="Name" style="width:100px;">
+						<p:cellEditor>
+							<f:facet name="output" style="width:100px;">
+								<h:outputText value="#{occupationSubType.name}" />
+							</f:facet>
+							<f:facet name="input" style="width:100px;">
+								<p:inputText value="#{occupationSubType.name}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Has Additional Field?">
+						<p:cellEditor>
+							<f:facet name="output">
+								<p:selectBooleanCheckbox disabled="true"
+									value="#{occupationSubType.additionalFieldPresent}">
+								</p:selectBooleanCheckbox>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox
+									value="#{occupationSubType.additionalFieldPresent}">
+								</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Additional Field Label">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{occupationSubType.additionalFieldLabel}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{occupationSubType.additionalFieldLabel}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Has Multiplier Field?">
+						<p:cellEditor>
+							<f:facet name="output">
+								<p:selectBooleanCheckbox disabled="true"
+									value="#{occupationSubType.multiplierPresent}">
+								</p:selectBooleanCheckbox>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox
+									value="#{occupationSubType.multiplierPresent}">
+								</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Multiplier Label">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{occupationSubType.multiplierLabel}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{occupationSubType.multiplierLabel}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Has Income Lumping?">
+						<p:cellEditor>
+							<f:facet name="output">
+								<p:selectBooleanCheckbox disabled="true"
+									value="#{occupationSubType.incomeLumpingRequired}">
+								</p:selectBooleanCheckbox>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox
+									value="#{occupationSubType.incomeLumpingRequired}">
+								</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Stability Factor">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{occupationSubType.stabilityFactor}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{occupationSubType.stabilityFactor}">
+									<f:selectItems value="#{occupationTypeBean.stabilityFactors}" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Annual Income">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{occupationSubType.annualIncome}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{occupationSubType.annualIncome}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Created By">
+						<h:outputText value="#{occupationSubType.createdBy}" />
+					</p:column>
+
+					<p:column headerText="Created Date">
+						<h:outputText value="#{occupationSubType.createdDate}" />
+
+					</p:column>
+
+					<p:column headerText="Updated By">
+						<h:outputText value="#{occupationSubType.updatedBy}" />
+
+					</p:column>
+
+					<p:column headerText="Updated Date">
+						<h:outputText value="#{occupationSubType.updatedDate}" />
+					</p:column>
+					
+					<p:column headerText="Active">
+						<p:cellEditor>
+							<f:facet name="output">
+								<p:selectBooleanCheckbox disabled="true"
+									value="#{occupationSubType.active}">
+								</p:selectBooleanCheckbox>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox
+									value="#{occupationSubType.active}">
+								</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column style="width:50px">
+						<p:rowEditor />
+					</p:column>
+					<p:column style="width:50px">
+						<p:commandLink
+							actionListener="#{occupationTypeBean.removeOccupationSubType(occupationSubType)}"
+							immediate="true" update=":form:occupationSubTypesPanel">
+							<span class="ui-icon ui-icon-trash"></span>
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

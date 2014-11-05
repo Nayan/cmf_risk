@@ -1,0 +1,1 @@
+package com.conflux.dal.dao;import java.util.List;import com.conflux.dal.bo.Office;public interface IOfficeDAO {	public abstract void persist(Office office);	public abstract void merge(Office office);	public abstract void delete(Office office);	public abstract List<Office> findAll();	public abstract Office findById(int officeId);}

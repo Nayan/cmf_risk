@@ -1,0 +1,139 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="View Audits in progress" url="#" />
+			</p:breadCrumb>
+			<p:spacer height="20"></p:spacer>
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:graphicImage library="images" name="loan_search.png" />
+
+				<p:column colspan="1">
+					<p:selectOneMenu value="#{auditBean.branchId}" required="true"
+						requiredMessage="Please select a Branch Office">
+						<f:selectItem itemLabel="Select A Branch" itemValue="" />
+						<f:selectItems value="#{loginBean.branchOffices}" />
+						<p:ajax update=":form:audits" immediate="true"
+							listener="#{auditBean.viewAllAuditsInProgress}" />
+
+					</p:selectOneMenu>
+				</p:column>
+
+
+			</h:panelGrid>
+
+			<p:spacer height="30"></p:spacer>
+			<p:separator></p:separator>
+
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="Search Results" styleClass="h1" />
+			</h:panelGrid>
+
+			<p:panel>
+
+				<p:dataTable var="audit" value="#{auditBean.auditsInProgress}"
+					id="audits" paginator="true" rows="10"
+					emptyMessage="No Audits found with given criteria"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15,20,50,100">
+
+					<p:column
+						sortBy="#{audit.entityName} (#{audit.entityType.toString()})"
+						filterBy="#{audit.entityName} (#{audit.entityType.toString()})"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Entity under Audit" />
+						</f:facet>
+						<h:outputText
+							value="#{audit.entityName} (#{audit.entityType.toString()})" />
+					</p:column>
+					<p:column sortBy="#{audit.name}" filterBy="#{audit.name}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Audit Process" />
+						</f:facet>
+						<h:outputText value="#{audit.name}" />
+					</p:column>
+
+					<p:column headerText="Started By">
+						<h:outputText value="#{audit.createdBy}" />
+					</p:column>
+
+					<p:column headerText="Started Date">
+						<h:outputText value="#{audit.startDate}" />
+					</p:column>
+
+					<p:column headerText="Updated By">
+						<h:outputText value="#{audit.updatedBy}" />
+
+					</p:column>
+
+					<p:column headerText="Updated Date">
+						<h:outputText value="#{audit.updatedDate}" />
+					</p:column>
+
+					<p:column style="width:50px">
+						<p:commandLink
+							action="#{auditBean.viewAuditInProgress(audit.auditId)}"
+							immediate="true" ajax="false">
+							<span class="ui-icon ui-icon-search"></span>
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+
+				<!-- Export -->
+				<h:panelGrid columns="2">
+					<p:panel header="Export All audit">
+						<h:commandLink>
+							<h:graphicImage library="images" name="excel.png" />
+							<p:dataExporter type="xls" target="audits" fileName="audit" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<h:graphicImage library="images" name="pdf.png" />
+							<p:dataExporter type="pdf" target="audits" fileName="audit" />
+						</h:commandLink>
+
+
+
+						<h:commandLink>
+							<h:graphicImage library="images" name="xml.png" />
+							<p:dataExporter type="xml" target="audits" fileName="audit" />
+						</h:commandLink>
+					</p:panel>
+
+					<p:panel header="Export Visible audit">
+						<h:commandLink>
+							<h:graphicImage library="images" name="excel.png" />
+							<p:dataExporter type="xls" target="audits" fileName="audit"
+								pageOnly="true" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<h:graphicImage library="images" name="pdf.png" />
+							<p:dataExporter type="pdf" target="audits" fileName="audit"
+								pageOnly="true" />
+						</h:commandLink>
+
+
+
+						<h:commandLink>
+							<h:graphicImage library="images" name="xml.png" />
+							<p:dataExporter type="xml" target="audits" fileName="audit"
+								pageOnly="true" />
+						</h:commandLink>
+					</p:panel>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

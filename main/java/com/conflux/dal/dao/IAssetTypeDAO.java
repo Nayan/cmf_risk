@@ -1,0 +1,1 @@
+package com.conflux.dal.dao;import java.util.List;import com.conflux.dal.bo.AssetType;public interface IAssetTypeDAO {	public abstract void persist(AssetType assetType);	public abstract void merge(AssetType assetType);	public abstract void delete(AssetType assetType);	public abstract List<AssetType> findAll();	public abstract AssetType findById(int assetTypeId);}

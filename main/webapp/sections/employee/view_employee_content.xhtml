@@ -1,0 +1,268 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{employeeBean.getEmployeeById(param.id)}"></f:event>
+		</f:metadata>
+		<h:form id="form" styleClass="big_form" prependId="false">
+			<p:breadCrumb>
+				<p:menuitem value="#{employeeBean.employee.officeName}" url="/" />
+				<p:menuitem
+					value="#{employeeBean.employee.firstName} #{employeeBean.employee.lastName}"
+					url="#" />
+			</p:breadCrumb>
+
+			<h:panelGrid columns="2" id="customerPanel"
+				styleClass="big_table_wide_left">
+
+				<h:panelGrid columns="1" id="centerDetailsPanel"
+					styleClass="big_table_wide_left">
+
+					<h:panelGrid columns="2" styleClass="table_border_spacing">
+
+						<h:outputText value="Name" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<h:outputText
+								value="#{employeeBean.employee.firstName} #{employeeBean.employee.lastName}"></h:outputText>
+						</h:panelGroup>
+
+						<h:outputLabel value="Delfix External Id" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<h:outputText value="#{employeeBean.employee.externalId}"></h:outputText>
+						</h:panelGroup>
+
+						<h:outputLabel value="Designation" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<h:outputText value="#{employeeBean.employee.employeeRole}"></h:outputText>
+						</h:panelGroup>
+
+						<h:outputLabel value="Supervising Officer" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<h:outputText value="#{employeeBean.employee.supervisorName}"></h:outputText>
+						</h:panelGroup>
+
+
+					</h:panelGrid>
+
+				</h:panelGrid>
+				<h:panelGrid columns="1" id="additionalInfoPanelGrid"
+					styleClass="big_table_wide" cellpadding="5">
+
+					<p:panel header="Quick Links" style="width:100%;height:140px">
+						<h:panelGrid>
+							<h:commandLink value="Attach an Audit"
+								rendered="#{employeeBean.employee.employeeRole == 'Loan Officer'}" ajax="false" immediate="true"
+								action="#{auditBean.attachAnAudit(1,employeeBean.employee.employeeId)}" >
+							</h:commandLink>
+							<h:commandLink value="Attach an Audit"
+								rendered="#{employeeBean.employee.employeeRole == 'Branch Manager'}"
+								action="#{auditBean.attachAnAudit(2,employeeBean.employee.employeeId)}">
+								
+							</h:commandLink>
+						</h:panelGrid>
+					</p:panel>
+
+				</h:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid styleClass="big_table_wide_left">
+				<p:tabView orientation="left">
+					<p:tab title="Contact Details">
+						<h:panelGrid columns="2">
+							<h:outputText value="Mobile Number: " styleClass="bold" />
+							<h:outputText value="#{employeeBean.employee.mobileNumber}" />
+							<h:outputText value="E-mail Address: " styleClass="bold" />
+							<h:outputText value="#{employeeBean.employee.emailAddress}" />
+						</h:panelGrid>
+						<p:spacer height="5"></p:spacer>
+						<p:fieldset legend="Permanent Address">
+							<p:panelGrid cellpadding="25" styleClass="no_margin"
+								style="width:100%">
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Address Line 1:" />
+									</p:column>
+									<p:column colspan="3">
+										<h:outputText
+											value="#{employeeBean.employee.permanentAddress.line1}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Address Line 2:" />
+									</p:column>
+									<p:column colspan="3">
+										<h:outputText
+											value="#{employeeBean.employee.permanentAddress.line2}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText
+											value="City: #{employeeBean.employee.permanentAddress.city}" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText
+											value="State: #{employeeBean.employee.permanentAddress.state}" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText
+											value="Zip: #{employeeBean.employee.permanentAddress.zip}" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:fieldset>
+						<p:spacer height="5"></p:spacer>
+						<p:fieldset legend="Current Address">
+							<p:panelGrid cellpadding="25" styleClass="no_margin"
+								style="width:100%">
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Address Line 1:" />
+									</p:column>
+									<p:column colspan="3">
+										<h:outputText
+											value="#{employeeBean.employee.currentAddress.line1}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Address Line 2:" />
+									</p:column>
+									<p:column colspan="3">
+										<h:outputText
+											value="#{employeeBean.employee.currentAddress.line2}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText
+											value="City: #{employeeBean.employee.currentAddress.city}" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText
+											value="State: #{employeeBean.employee.currentAddress.state}" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText
+											value="Zip: #{employeeBean.employee.currentAddress.zip}" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:fieldset>
+					</p:tab>
+					<p:tab title="Personnel Details">
+						<h:panelGrid columns="2" cellspacing="20 20 20 20">
+							<h:outputText value="Emergency Contact Name:" styleClass="bold" />
+							<h:outputText value="#{employeeBean.employee.contactName}" />
+							<h:outputText value="Emergency Contact Phone:" styleClass="bold" />
+							<h:outputText value="#{employeeBean.employee.contactPhNo}" />
+							<h:outputText value="Blood Group:" styleClass="bold" />
+							<h:outputText value="#{employeeBean.employee.bloodGroup}" />
+						</h:panelGrid>
+						<p:spacer height="5"></p:spacer>
+						<p:fieldset legend="Education Details">
+							<p:panelGrid cellpadding="25" styleClass="no_margin"
+								style="width:100%">
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Qualification:" />
+									</p:column>
+									<p:column colspan="3">
+										<h:outputText value="#{employeeBean.employee.educationLevel}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="University:" />
+									</p:column>
+									<p:column colspan="3">
+										<h:outputText value="#{employeeBean.employee.university}" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:fieldset>
+					</p:tab>
+					<p:tab title="Audit History">
+						<h:panelGrid columns="1" cellpadding="10">
+							<p:dataTable var="audit"
+								value="#{employeeBean.employee.auditDTOs}" paginator="true"
+								rows="10" emptyMessage="No Audits found with given criteria"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20,50,100">
+
+								<p:column sortBy="#{audit.name}" filterBy="#{audit.name}"
+									filterMatchMode="contains">
+									<f:facet name="header">
+										<h:outputText value="Audit Process" />
+									</f:facet>
+									<h:outputText value="#{audit.name}" />
+								</p:column>
+
+								<p:column headerText="Started Date">
+									<h:outputText value="#{audit.startDate}" />
+								</p:column>
+
+								<p:column headerText="Auditor">
+									<h:outputText value="#{audit.createdBy}" />
+								</p:column>
+
+
+								<p:column headerText="Status">
+									<h:outputText value="Active" rendered="#{audit.active == true}" />
+									<h:outputText value="Completed"
+										rendered="#{audit.active == false}" />
+								</p:column>
+
+								<p:column headerText="Auditor Observations">
+									<h:outputText value="#{audit.auditorComments}" />
+								</p:column>
+
+								<p:column headerText="Last Updated By">
+									<h:outputText value="#{audit.updatedBy}" />
+
+								</p:column>
+
+								<p:column headerText="Last Updated Date">
+									<h:outputText value="#{audit.updatedDate}" />
+								</p:column>
+
+								<p:column style="width:50px">
+									<p:commandLink rendered="#{audit.active == true}"
+										action="#{auditBean.viewAuditInProgress(audit.auditId)}"
+										immediate="true" ajax="false">
+										<span class="ui-icon ui-icon-search"></span>
+									</p:commandLink>
+									<p:commandLink rendered="#{audit.active == false}"
+										action="#{auditBean.viewClosedAudit(audit.auditId)}"
+										immediate="true" ajax="false">
+										<span class="ui-icon ui-icon-search"></span>
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</h:panelGrid>
+					</p:tab>
+
+				</p:tabView>
+			</h:panelGrid>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

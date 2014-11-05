@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition template="/templates/masterLayout.xhtml">
+		<ui:define name="windowTitle">
+			<h:outputText value="Home" />
+		</ui:define>
+
+		<ui:define name="heading">
+			<ui:include src="/sections/home/header.xhtml" />
+		</ui:define>
+
+		<ui:define name="sidebarLeft">
+			<ui:include src="/sections/home/sidebarLeft.xhtml" />
+		</ui:define>
+
+		<ui:define name="content">
+
+			<h:form styleClass="big_form" id="homeForm">
+				<h:panelGrid columns="1">
+					<h:panelGroup>
+						<h:outputText value="Hello " />
+						<h:outputText value="#{loginBean.userT.username}"
+							styleClass="bold" />
+						<h:outputText
+							value=", Welcome to Chaitanya's Risk and Audit Management System" />
+					</h:panelGroup>
+				</h:panelGrid>
+				<p:spacer height="20"></p:spacer>
+				<h:panelGrid columns="2">
+					<h:panelGroup>
+						<h:outputLabel value="Please select a Branch:" />
+					</h:panelGroup>
+					<p:selectOneMenu value="#{baseBean.branchId}" style="width:250px" styleClass="con-ui-helper-reset">
+						<f:selectItems value="#{loginBean.offices}" />
+						<p:ajax update=":homeForm:selectionPanel"
+							listener="#{baseBean.populateCentersByBranchList}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<p:spacer height="20"></p:spacer>
+				<p:separator></p:separator>
+
+				<h:panelGrid columns="2" styleClass="big_table_wide_padding_left"
+					cellspacing="50px" id="selectionPanel">
+					<h:panelGroup>
+						<p:panel style="width:100%;">						
+						<p:dataTable var="center" id="centers"
+							value="#{baseBean.centerList}" emptyMessage="No centers found"
+							scrollable="true" scrollHeight="150" resizableColumns="true" style="width:100%;">
+							<p:column sortBy="#{center.displayName}"
+								filterBy="#{center.displayName}" headerText="Center"
+								filterMatchMode="contains" style="width:80%;">
+								<h:outputText value="#{center.displayName}" />
+							</p:column>
+							<p:column>
+								<p:commandButton icon="ui-icon-search"
+									update=":homeForm:members,:homeForm:selectedCenter,:homeForm:selectedLoanOfficer"
+									actionListener="#{baseBean.populateMembersList(center.customerId)}">
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>						
+						</p:panel>
+						
+						<p:spacer height="30"></p:spacer>
+						<h:outputLabel value="Selected Center:" styleClass="bold" />
+						<h:commandLink value="#{baseBean.selectedCenter.displayName}"
+							id="selectedCenter"
+							action="#{centerBean.viewCenter(baseBean.selectedCenter.customerId)}" />
+						<h:outputLabel value="Loan Officer: " styleClass="bold" />
+						<h:outputText value="#{baseBean.selectedCenter.loanOfficerName}"
+							id="selectedLoanOfficer" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:panel style="width:80%;">
+						<p:dataTable id="members" var="member"
+							value="#{baseBean.memberList}" emptyMessage="No members found"
+							scrollable="true" scrollHeight="150" resizableColumns="true" style="width:100%;">
+							<p:column sortBy="#{member.firstName} #{member.lastName}"
+								filterBy="#{member.firstName} #{member.lastName}"
+								headerText="Member" filterMatchMode="contains" style="width:80%;">
+								<h:outputText value="#{member.firstName} #{member.lastName}" />
+							</p:column>
+							<p:column style="width:30px">
+								<p:commandButton icon="ui-icon-search" ajax="false"
+									action="#{customerBean.viewClient(member.customerId)}">
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+						</p:panel>
+						<p:spacer height="30"></p:spacer>
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
+

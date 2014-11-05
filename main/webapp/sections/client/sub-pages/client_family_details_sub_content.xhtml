@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:panelGrid id="viewClientFamilyDetails"
+			rendered="#{customerBean.editFamilyDetailsFlag == false}">
+			<h:outputText value="Summary:" styleClass="bold" />
+			<p:spacer width="5"></p:spacer>
+			<h:panelGrid columns="2">
+				<h:outputText value="Number of members in the family:" />
+				<h:outputText value="#{customerBean.customer.numFamilyMembers}" />
+				<h:outputText
+					value="Number of dependent members below 18 years of age:" />
+				<h:outputText value="#{customerBean.customer.numMinDependents}" />
+				<h:outputText
+					value="Number of dependent members above 60 years of age:" />
+				<h:outputText value="#{customerBean.customer.numSeniorDependents}" />
+				<h:outputText value="Seriously unwell members:" />
+				<h:outputText value="#{customerBean.customer.numUnwellMembers}" />
+				<h:outputText value="Description:" />
+				<h:outputText value="#{customerBean.customer.unwellMemberHealthDescription}" />
+			</h:panelGrid>
+			<h:outputText value="Details:" styleClass="bold" />
+			<p:spacer width="5"></p:spacer>
+			<ui:include
+				src="/sections/client/sub-pages/edit-sub-pages/client_view_family_details_sub_content.xhtml" />
+			<p:panelGrid columns="3" cellspacing="25" styleClass="big_table_wide">
+				<f:facet name="footer">
+					<p:commandButton value="Edit" icon="ui-icon-pencil"
+						actionListener="#{customerBean.editClientFamilyDetails}"
+						update=":form:clientSectionsTabView:clientFamilyDetailsSectionsTab" />
+					<p:spacer width="20px;" />
+				</f:facet>
+			</p:panelGrid>
+		</h:panelGrid>
+		<h:panelGrid id="editClientFamilyDetails"
+			rendered="#{customerBean.editFamilyDetailsFlag == true}">
+			<h:panelGrid columns="4">
+				<h:outputText value="Number of members in the family:" />
+				<p:inputText value="#{customerBean.customer.numFamilyMembers}" />
+				<h:outputText
+					value="Number of dependent members below 18 years of age:" />
+				<p:inputText value="#{customerBean.customer.numMinDependents}" />
+				<h:outputText
+					value="Number of dependent members above 60 years of age:" />
+				<p:inputText value="#{customerBean.customer.numSeniorDependents}" />
+				<h:outputText
+					value="Seriously unwell members:" />
+				<p:inputText value="#{customerBean.customer.numUnwellMembers}" />
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<h:outputText value="Description:" />
+				<h:inputTextarea rows="6" cols="33"
+					value="#{customerBean.customer.unwellMemberHealthDescription}" />	
+			</h:panelGrid>
+			
+			<ui:include
+				src="/sections/client/sub-pages/edit-sub-pages/client_edit_family_details_sub_content.xhtml" />
+			<p:panelGrid columns="3" cellspacing="25" styleClass="big_table_wide">
+				<f:facet name="footer">
+					<p:commandButton value="Cancel Edit" icon="ui-icon-trash"
+						actionListener="#{customerBean.cancelEditClientFamilyDetails}"
+						update=":form:clientSectionsTabView:clientFamilyDetailsSectionsTab" />
+					<p:spacer width="20px;" />
+					<p:commandButton value="Save" icon="ui-icon-check"
+						actionListener="#{customerBean.saveFamilyMembers}"
+						update=":form:clientSectionsTabView:clientFamilyDetailsSectionsTab" />
+				</f:facet>
+			</p:panelGrid>
+		</h:panelGrid>
+	</ui:composition>
+</h:body>
+</html>

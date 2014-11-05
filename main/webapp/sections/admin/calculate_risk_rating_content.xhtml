@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="Calculate Risk Rating" />
+			</p:breadCrumb>
+			<p:spacer height="20px;" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<p:spacer height="20px;" />
+
+			<p:panel header="Calculate Risk Rating"
+				styleClass="medium_input_table">
+				<p:spacer height="10px" />
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Start Risk Rating Calculation:" />
+						</p:column>
+						<p:column colspan="1" styleClass="right">
+							<p:commandButton value="Start" ajax="false" icon="ui-icon-check"
+								action="#{riskRatingBean.calculateAllRiskRatings}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:spacer height="10px" />
+				<p:separator id="separator" />
+				<p:spacer height="10px" />
+
+			</p:panel>
+
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

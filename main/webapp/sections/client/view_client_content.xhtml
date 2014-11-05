@@ -1,0 +1,172 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="#{customerBean.customer.officeName}"></p:menuitem>
+				<p:menuitem
+					value="#{customerBean.customer.firstName} #{customerBean.customer.lastName}" />
+			</p:breadCrumb>
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+
+			<p:panel styleClass="big_input_table" id="clientDetails">
+				<p:panelGrid styleClass="fixed_big_table no_margin">
+					<p:row>
+						<p:column colspan="1">
+							<p:panelGrid cellpadding="25" styleClass="no_margin">
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Name :" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText
+											value="#{customerBean.customer.firstName} #{customerBean.customer.lastName}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Address :" />
+									</p:column>
+									<p:column colspan="1" rendered="#{customerBean.customer.addressDTO != null}">
+										<h:outputText value="#{customerBean.customer.addressDTO.line1}" rendered="#{customerBean.customer.addressDTO != null}"/>
+										<h:outputText value="  #{customerBean.customer.addressDTO.line2}" rendered="#{customerBean.customer.addressDTO != null}"/>
+										<h:outputText value="  #{customerBean.customer.addressDTO.city}" rendered="#{customerBean.customer.addressDTO != null}"/>
+										<h:outputText value="  #{customerBean.customer.addressDTO.state}" rendered="#{customerBean.customer.addressDTO != null}"/>
+										<h:outputText value="  #{customerBean.customer.addressDTO.zip}" rendered="#{customerBean.customer.addressDTO != null}"/>
+										<h:outputText value="  #{customerBean.customer.addressDTO.country}" rendered="#{customerBean.customer.addressDTO != null}"/>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Delfix Client Id :" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="#{customerBean.customer.externalId}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Risk Rating :" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="#{customerBean.customer.riskRating}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="" />
+									</p:column>
+									<p:column colspan="1">
+										<p:commandButton value="Calculate Rating"
+											actionListener="#{customerBean.calculateCustomerRiskRating(customerBean.customer.customerId)}"
+											update=":form:clientDetails" />
+										<p:ajaxStatus style="width:16px;height:16px;"
+											id="ajaxStatusPanel">
+											<f:facet name="start">
+												<h:graphicImage value="/resources/images/ajaxloading.jpg" />
+											</f:facet>
+
+											<f:facet name="complete">
+												<h:outputText value="" />
+											</f:facet>
+										</p:ajaxStatus>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Pending Update :" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="#{customerBean.customer.pendingUpdate}" />
+									</p:column>
+									<p:column colspan="1">
+										<p:commandButton value="Mark As Updated" icon="ui-icon-check"
+											rendered="#{customerBean.customer.pendingUpdate == true}"
+											actionListener="#{customerBean.updatePendingStatus}"
+											update=":form:clientDetails" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+							<p:fieldset legend="Loan Details">
+								<ui:repeat var="loan"
+									value="#{customerBean.customer.loanAccountDTOs}">
+									<p:panelGrid cellpadding="25" styleClass="small_table">
+										<p:row>
+											<p:column colspan="1">
+												<p:commandLink ajax="false"
+													value="#{loan.loanProductName} - #{loan.externalId}"
+													action="view_loan">
+													<f:param name="id" value="#{loan.loanAccountId}"></f:param>
+												</p:commandLink>
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</ui:repeat>
+							</p:fieldset>
+
+						</p:column>
+						<p:column colspan="1">
+							<p:panel header="Risk Rating Change History"
+								styleClass="big_input_table2 no_margin">
+								<p:panelGrid styleClass="fixed_small_table no_margin">
+
+								</p:panelGrid>
+							</p:panel>
+							<p:panel header="Client Update History"
+								styleClass="big_input_table2 no_margin">
+								<p:panelGrid styleClass="fixed_small_table no_margin">
+
+								</p:panelGrid>
+							</p:panel>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:tabView orientation="left" id="clientSectionsTabView">
+					<!--<p:tab title="Client Details">
+						<h:panelGrid id="clientDetailsSectionsTab">
+							<ui:include
+								src="/sections/client/sub-pages/client_details_sub_content.xhtml" />
+						</h:panelGrid>
+					</p:tab>
+					--><p:tab title="Family Details">
+						<h:panelGrid id="clientFamilyDetailsSectionsTab">
+							<ui:include
+								src="/sections/client/sub-pages/client_family_details_sub_content.xhtml" />
+						</h:panelGrid>
+					</p:tab>
+					<p:tab title="Family Occupation Details">
+						<h:panelGrid id="clientFamilyOccupationSectionsTab">
+							<ui:include
+								src="/sections/client/sub-pages/client_family_occupation_sub_content.xhtml" />
+						</h:panelGrid>
+					</p:tab>
+					<p:tab title="Income Generating Assets">
+						<h:panelGrid id="clientAssetSectionsTab">
+							<ui:include
+								src="/sections/client/sub-pages/client_assets_sub_content.xhtml" />
+						</h:panelGrid>
+					</p:tab>
+					<p:tab title="Loans From Other MFI">
+						<h:panelGrid id="clientLoanDetailsSectionsTab">
+							<ui:include
+								src="/sections/client/sub-pages/client_loans_sub_content.xhtml" />
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+
+			</p:panel>
+		</h:form>
+
+	</ui:composition>
+
+</h:body>
+</html>

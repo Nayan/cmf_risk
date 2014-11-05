@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="#{centerBean.center.displayName}"
+					action="#{centerBean.viewCenter(baseBean.selectedCenter.customerId)}"></p:menuitem>
+				<p:menuitem value="Attendance History" url="#" />
+			</p:breadCrumb>
+			<p:spacer height="20"></p:spacer>
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="Attendance History" styleClass="h1" />
+			</h:panelGrid>
+
+			<p:dataTable id="meetings" var="meeting"
+				value="#{centerBean.meetings}" paginator="true" rows="10"
+				emptyMessage="No records found with given criteria"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,50,100">
+
+				<p:column sortBy="#{meeting.meetingDate}"
+					filterBy="#{meeting.meetingDate}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Meeting Date" />
+					</f:facet>
+					<h:outputText value="#{meeting.meetingDate}" />
+				</p:column>
+				<p:column sortBy="#{meeting.membersPresent}"
+					filterBy="#{meeting.membersPresent}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Members Present" />
+					</f:facet>
+					<h:outputText value="#{meeting.membersPresent}" />
+				</p:column>
+				<p:column sortBy="#{meeting.totalMembers - meeting.membersPresent}"
+					filterBy="#{meeting.totalMembers - meeting.membersPresent}"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Members Absent" />
+					</f:facet>
+					<h:outputText
+						value="#{meeting.totalMembers - meeting.membersPresent}" />
+				</p:column>
+				<p:column sortBy="#{meeting.totalMembers}"
+					filterBy="#{meeting.totalMembers}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Center Size" />
+					</f:facet>
+					<h:outputText value="#{meeting.totalMembers}" />
+				</p:column>
+				<p:column sortBy="#{meeting.dataCaptured}"
+					filterBy="#{meeting.dataCaptured}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Attendance Entered?" />
+					</f:facet>
+					<h:outputText value="#{meeting.dataCaptured}">
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="#{meeting.updatedBy}"
+					filterBy="#{meeting.updatedBy}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Updated By" />
+					</f:facet>
+					<h:outputText value="#{meeting.updatedBy}">
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="#{meeting.updatedDate}"
+					filterBy="#{meeting.updatedDate}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Updated Date" />
+					</f:facet>
+					<h:outputText value="#{meeting.updatedDate}">
+					</h:outputText>
+				</p:column>
+
+			</p:dataTable>
+
+			<!-- Export -->
+			<h:panelGrid columns="2">
+				<p:panel header="Export All meetings">
+					<h:commandLink>
+						<h:graphicImage library="images" name="excel.png" />
+						<p:dataExporter type="xls" target="meetings" fileName="meetings" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="pdf.png" />
+						<p:dataExporter type="pdf" target="meetings" fileName="meetings" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="xml.png" />
+						<p:dataExporter type="xml" target="meetings" fileName="meetings" />
+					</h:commandLink>
+				</p:panel>
+
+				<p:panel header="Export Visible meetings">
+					<h:commandLink>
+						<h:graphicImage library="images" name="excel.png" />
+						<p:dataExporter type="xls" target="meetings" fileName="meetings"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="pdf.png" />
+						<p:dataExporter type="pdf" target="meetings" fileName="meetings"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="xml.png" />
+						<p:dataExporter type="xml" target="meetings" fileName="meetings"
+							pageOnly="true" />
+					</h:commandLink>
+				</p:panel>
+			</h:panelGrid>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

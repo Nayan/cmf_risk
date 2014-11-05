@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition template="/templates/simpleMasterLayout.xhtml">
+
+		<ui:define name="windowTitle">
+			<h:outputText value="Delete a pledge" />
+		</ui:define>
+
+		<ui:define name="heading">
+			<ui:include src="/sections/home/header.xhtml" />
+		</ui:define>
+
+
+		<ui:define name="content">
+			<h:form>
+				<p:breadCrumb>
+					<p:menuitem value="Home" url="/" />
+					<p:menuitem value="#{pledgeBean.pledgeT.customerName}"
+						action="#{customerBean.viewCustomer(pledgeBean.pledgeT.customerId)}" />
+				</p:breadCrumb>
+
+				<p:spacer height="20" />
+
+				<h:panelGrid columns="1" styleClass="big_table_wide">
+					<h:outputText value="Pledge Archival confirmation" styleClass="h1" />
+				</h:panelGrid>
+
+				<p:spacer height="20"></p:spacer>
+
+				<p:panel header="You have successfully archived a Pledge"
+					style="width:700px">
+					<h:outputText
+						value="Please Note: The Pledge with identifier #{pledgeBean.pledgeT.pledgeNumber} has been archived" />
+					<p:spacer width="20" height="20"></p:spacer>
+					<br />
+					<br />
+					<br />
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
+

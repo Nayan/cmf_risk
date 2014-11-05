@@ -1,0 +1,60 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition template="/templates/masterLayout.xhtml">
+		<ui:define name="windowTitle">
+			<h:outputText value="Login" />
+		</ui:define>
+
+		<ui:define name="heading">
+			<ui:include src="/sections/login/header.xhtml" />
+		</ui:define>
+
+		<ui:define name="sidebarLeft">
+			<ui:include src="/sections/login/sidebarLeft.xhtml" />
+		</ui:define>
+
+		<ui:define name="content">
+			<h:form styleClass="big_form">
+
+
+				<h:panelGrid columns="2" styleClass="big_table" id="loginPanel">
+					<h:graphicImage library="images" name="login.png" />
+					<p:panelGrid columns="2">
+						<f:facet name="header">  
+							Login to Chaitanya's Risk and Audit Management System  
+						 </f:facet>
+						<h:outputLabel value="Username" for="name" />
+						<p:inputText id="name" value="#{loginBean.login}" required="true" />
+						<h:outputLabel value="Password" for="password" />
+						<p:password id="password" required="true"
+							value="#{loginBean.password}" feedback="true" />
+						<f:facet name="footer">
+							<p:commandButton action="#{loginBean.login}" value="Login"
+								update="loginPanel" icon="ui-icon-check" />
+						</f:facet>
+					</p:panelGrid>
+				</h:panelGrid>
+				<p:messages autoUpdate="true"></p:messages>
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

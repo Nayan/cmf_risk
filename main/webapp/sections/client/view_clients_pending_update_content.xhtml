@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Select Centers Pending Update"
+					url="view_centers_with_clients_pending_update.jsf" />
+				<p:menuitem
+					value="Clients Pending Update for #{customerBean.centerName}(#{customerBean.branchName})"
+					url="#"></p:menuitem>
+			</p:breadCrumb>
+			<p:spacer height="20" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<p:spacer height="20" />
+			<h:panelGrid columns="2" cellspacing="20 20 20 20">
+				<h:outputText value="Selected Branch:" styleClass="bold" />
+				<h:outputText value="#{customerBean.branchName}" />
+				<h:outputText value="Selected Center:" styleClass="bold" />
+				<h:outputText value="#{customerBean.centerName}" />
+			</h:panelGrid>
+			<p:separator></p:separator>
+			<p:spacer height="20"></p:spacer>
+			<p:panel style="align:center;">
+			
+				<p:dataTable var="member" value="#{customerBean.customers}"
+					paginator="true" rows="10"
+					emptyMessage="No Clients Pending Update found with given criteria"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15,20,50,100" style="width:50%; align:center;">
+					<p:column sortBy="#{member.firstName} #{member.lastName}"
+						filterBy="#{member.firstName} #{member.lastName}"
+						headerText="Member" filterMatchMode="contains" style="width:80%;">
+						<h:outputText value="#{member.firstName} #{member.lastName}" />
+					</p:column>
+					<p:column style="width:30px">
+						<p:commandButton icon="ui-icon-search" ajax="false"
+							action="#{customerBean.viewClient(member.customerId)}">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

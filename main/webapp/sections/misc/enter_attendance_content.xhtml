@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Select Attendance sheet"
+					url="#" />
+			</p:breadCrumb>
+			<p:spacer width="20" />
+			<p:panel header="Enter Attendance Sheet"
+				styleClass="medium_input_table">
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Select a Branch :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{baseBean.branchId}" required="true"
+								requiredMessage="Please select a Branch Office">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{loginBean.branchOffices}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Date :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:calendar value="#{baseBean.meetingDate}" required="true"
+								requiredMessage="Please select meeting date for the center"
+								navigator="true" pattern="dd/MM/yyyy" yearRange="c-1:c"></p:calendar>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<p:commandButton action="home.jsf" value="Cancel"
+								immediate="true" ajax="false" icon="ui-icon-cancel" />
+						</p:column>
+						<p:column colspan="1">
+							<p:commandButton
+								action="#{baseBean.navigateToEnterBulkAttendance}"
+								value="Continue" ajax="false" icon="ui-icon-check" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

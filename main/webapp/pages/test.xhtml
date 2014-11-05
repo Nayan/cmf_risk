@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><ui:insert name="windowTitle" />
+	</title>
+	<h:outputStylesheet library="css" name="main.css" />
+</h:head>
+
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit styleClass="no-border" position="north" size="50">
+			<h:outputText value="Top content." />
+		</p:layoutUnit>
+		<p:layoutUnit styleClass="no-border" position="south" size="100">
+			<h:outputText value="Bottom content." />
+		</p:layoutUnit>
+		<p:layoutUnit styleClass="no-border" position="west" size="300">
+			<h:outputText value="Left content" />
+		</p:layoutUnit>
+		<p:layoutUnit styleClass="no-border" position="east" size="200">
+			<h:outputText value="Right Content" />
+		</p:layoutUnit>
+		<p:layoutUnit styleClass="no-border" position="center">
+			<h:outputText value="Center Content" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

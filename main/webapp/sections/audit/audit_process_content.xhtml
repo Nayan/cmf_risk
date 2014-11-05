@@ -1,0 +1,128 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="viewLoanForm" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="#{auditBean.entityName}" url="view_employee.jsf"
+					rendered="#{auditBean.entityType.entityId == 1}">
+					<f:param name="id" value="#{auditBean.entityId}"></f:param>
+				</p:menuitem>
+				<p:menuitem value="#{auditBean.entityName}" url="view_employee.jsf"
+					rendered="#{auditBean.entityType.entityId == 2}">
+					<f:param name="id" value="#{auditBean.entityId}"></f:param>
+				</p:menuitem>
+				<p:menuitem value="#{auditBean.entityName}"
+					action="#{centerBean.viewCenter(auditBean.entityId)}"
+					rendered="#{auditBean.entityType.entityId == 3}"></p:menuitem>
+				<p:menuitem value="Attach an Audit" url="/audits/attach_audit.jsf" />
+				<p:menuitem value="#{auditBean.audit.name}"></p:menuitem>
+			</p:breadCrumb>
+			<p:spacer width="20" />
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="#{auditBean.audit.name} Audit Process"
+					styleClass="bold" />
+			</h:panelGrid>
+			<p:spacer height="20"></p:spacer>
+			<p:dataTable id="auditQuestionsTable" var="auditQuestion"
+				value="#{auditBean.audit.auditQuestionDTOs}"
+				styleClass="big_table_wide_left">
+
+				<p:column>
+					<h:outputText value="#{auditQuestion.questionString}" />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu value="#{auditQuestion.obtainedScore}"
+						rendered="#{auditQuestion.negativeScore == false}">
+						<f:selectItems value="#{auditQuestion.applicableScoreRange}" />
+					</p:selectOneMenu>
+					<p:selectBooleanCheckbox
+						value="#{auditQuestion.negativeQuestionTicked}"
+						rendered="#{auditQuestion.negativeScore == true}"></p:selectBooleanCheckbox>
+				</p:column>
+
+			</p:dataTable>
+			<p:spacer height="20"></p:spacer>
+
+			<p:separator></p:separator>
+			<h:panelGrid columns="2" id="auditFollowupGrid1"
+				styleClass="big_table_wide" cellpadding="15">
+				<h:panelGrid columns="2" id="auditCommentsGrid"
+					styleClass="big_table_wide">
+					<h:outputText value="Auditor observations" styleClass="bold" />
+					<p:inputTextarea rows="7" cols="90"
+						value="#{auditBean.audit.auditorComments}"></p:inputTextarea>
+				</h:panelGrid>
+				<h:panelGrid></h:panelGrid>
+			</h:panelGrid>
+			<p:separator></p:separator>
+			<h:panelGrid columns="1" id="actionItemsGrid"
+				styleClass="big_table_wide">
+				<h:outputText value="Action Items" styleClass="bold" />
+			</h:panelGrid>
+			<h:panelGrid columns="2" id="auditFollowupGrid"
+				styleClass="big_table_wide" cellpadding="15">
+				
+				<h:panelGrid columns="4">
+					<h:panelGroup>
+						<h:outputText value="Action Owner:" />
+						<p:spacer width="20px"></p:spacer>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:selectOneMenu value="#{auditBean.audit.actionOwnerId}">
+							<f:selectItems value="#{auditBean.employeesInScope}" />
+						</p:selectOneMenu>
+						<p:spacer width="20px"></p:spacer>
+					</h:panelGroup>
+					<h:panelGroup>
+						<h:outputText value="Action Plan followup Date:" />
+						<p:spacer width="20px"></p:spacer>
+					</h:panelGroup>
+					<p:calendar value="#{auditBean.audit.followUpDate}"></p:calendar>
+				</h:panelGrid>
+				<h:panelGrid></h:panelGrid>
+				<h:panelGrid columns="2">
+					<h:outputText value="Action Plan  :" />
+					<p:inputTextarea rows="7" cols="60"
+						value="#{auditBean.audit.actionPlan}"></p:inputTextarea>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<h:outputText value="Action Taken:" />
+					<p:inputTextarea rows="7" cols="60"
+						value="#{auditBean.audit.actionTaken}"></p:inputTextarea>
+				</h:panelGrid>
+				
+			</h:panelGrid>
+
+			<p:spacer height="20"></p:spacer>
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:panelGroup>
+					<p:commandButton value="Cancel" ajax="false" icon="ui-icon-cancel"
+						immediate="true" action="attach_audit.jsf" />
+					<p:spacer width="10" />
+					<p:commandButton value="Save" ajax="false"
+						rendered="#{auditBean.auditInProgress == false}"
+						icon="ui-icon-disk" action="#{auditBean.saveAuditForLater}" />
+					<p:commandButton value="Update and Save" ajax="false"
+						rendered="#{auditBean.auditInProgress == true}"
+						icon="ui-icon-disk" action="#{auditBean.updateAudit}" />
+					<p:commandButton value="Complete Audit" ajax="false"
+						rendered="#{auditBean.auditInProgress == false and (loginBean.userT.auditor or loginBean.userT.admin)}"
+						icon="ui-icon-check" action="#{auditBean.saveAudit}" />
+					<p:commandButton value="Update and Complete Audit" ajax="false"
+						rendered="#{auditBean.auditInProgress == true and (loginBean.userT.auditor or loginBean.userT.admin)}"
+						icon="ui-icon-check" action="#{auditBean.updateAndCloseAudit}" />
+				</h:panelGroup>
+
+			</h:panelGrid>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

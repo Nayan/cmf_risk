@@ -1,0 +1,1 @@
+package com.conflux.dal.dao;import java.util.List;import com.conflux.dal.bo.Question;public interface IQuestionDAO {	public abstract void persist(Question question);	public abstract void merge(Question question);	public abstract void delete(Question question);	public abstract List<Question> findAll();	public abstract Question findById(int questionId);}

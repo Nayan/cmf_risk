@@ -1,0 +1,256 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="Create Income Generating Asset Sub-Types" />
+			</p:breadCrumb>
+			<p:spacer height="20px;" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true" />
+			<p:spacer height="20px;" />
+
+			<p:panel header="Create Income Generating Asset Sub-Types"
+				styleClass="medium_input_table">
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Asset Type :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{assetTypeBean.assetTypeId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.assetTypes}" />
+								<p:ajax update=":form:assetSubTypesPanel"
+									listener="#{assetTypeBean.populateAssetSubTypes}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Branch :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{assetTypeBean.branchId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{loginBean.branchOffices}" />
+								<p:ajax update=":form:assetSubTypesPanel"
+									listener="#{assetTypeBean.populateAssetSubTypes}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:separator />
+				<h:outputText value="Create a New SubType" />
+				<p:panelGrid id="newAssetSubTypePanel">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Name :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:inputText id="name" required="true" label="Name"
+								value="#{assetTypeBean.assetSubTypeDTO.name}">
+								<f:validateLength minimum="3" />
+							</p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Multiplier Field Label :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:inputText id="mfl" required="true" label="Mfl"
+								value="#{assetTypeBean.assetSubTypeDTO.multiplierFieldLabel}"
+								validatorMessage="Multiplier field should be atleast three characters long"
+								requiredMessage="Please enter the multiplier field label">
+								<f:validateLength minimum="3" />
+							</p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Requires an Additional Field? " />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectBooleanCheckbox
+								value="#{assetTypeBean.assetSubTypeDTO.additionalFieldPresent}">
+								<p:ajax
+									update=":form:additionalFieldLabelInput,:form:additionalFieldLabelText"
+									event="change" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column colspan="1" styleClass="right">
+							<h:panelGroup id="additionalFieldLabelInput">
+								<h:outputText value="Additional Field Label :"
+									rendered="#{assetTypeBean.assetSubTypeDTO.additionalFieldPresent}" />
+							</h:panelGroup>
+						</p:column>
+						<p:column colspan="1">
+							<h:panelGroup id="additionalFieldLabelText">
+								<p:inputText id="afl" required="true"
+									rendered="#{assetTypeBean.assetSubTypeDTO.additionalFieldPresent}"
+									value="#{assetTypeBean.assetSubTypeDTO.additionalFieldLabel}"
+									validatorMessage="Additional field should be atleast three characters long"
+									requiredMessage="Please enter the additional field label">
+									<f:validateLength minimum="3" />
+								</p:inputText>
+							</h:panelGroup>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Annual Income :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:inputText id="annualincome"
+								value="#{assetTypeBean.assetSubTypeDTO.annualIncome}"
+								required="true" label="annualincome"
+								requiredMessage="Please enter a valid Numerical value for Annual Income">
+								<f:validateDoubleRange minimum="0"></f:validateDoubleRange>
+							</p:inputText>
+						</p:column>
+
+					</p:row>
+				</p:panelGrid>
+
+				<p:spacer height="30px" />
+
+				<p:panelGrid columns="3" cellspacing="25"
+					styleClass="big_table_wide">
+					<f:facet name="footer">
+						<p:commandButton value="Clear" icon="ui-icon-trash"
+							immediate="true"
+							actionListener="#{assetTypeBean.resetAssetSubType}"
+							update=":form:newAssetSubTypePanel,:form:annualincome" />
+						<p:spacer width="20px;" />
+						<p:commandButton value="Submit" icon="ui-icon-check"
+							actionListener="#{assetTypeBean.addAssetSubType}"
+							update=":form:newAssetSubTypePanel,:form:assetSubTypesPanel" />
+					</f:facet>
+				</p:panelGrid>
+				<p:spacer height="20px;"></p:spacer>
+				<p:separator />
+				<p:spacer height="20px;"></p:spacer>
+			</p:panel>
+
+			<p:spacer height="20"></p:spacer>
+
+			<p:separator></p:separator>
+			<p:commandButton value="Print Asset Subtype Details" type="button"
+				icon="ui-icon-print">
+				<p:printer target="assetSubTypesPanel" />
+			</p:commandButton>
+			<p:panel id="assetSubTypesPanel">
+				<h:outputText value="Available Asset subtypes" styleClass="bold" />
+				<p:dataTable id="assetSubTypes" var="assetSubType"
+					value="#{assetTypeBean.assetSubTypes}" editable="true">
+
+					<p:ajax event="rowEdit" update="@this"
+						listener="#{assetTypeBean.onRowEdit}" />
+
+					<p:column headerText="Name">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{assetSubType.name}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{assetSubType.name}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Has Additional Field?">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{assetSubType.additionalFieldPresent}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{assetSubType.additionalFieldPresent}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Additional Field Label">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{assetSubType.additionalFieldLabel}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{assetSubType.additionalFieldLabel}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Multiplier Label">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{assetSubType.multiplierFieldLabel}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{assetSubType.multiplierFieldLabel}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+					<p:column headerText="Annual Income">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{assetSubType.annualIncome}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{assetSubType.annualIncome}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Created By">
+						<h:outputText value="#{assetSubType.createdBy}" />
+					</p:column>
+
+					<p:column headerText="Created Date">
+						<h:outputText value="#{assetSubType.createdDate}" />
+
+					</p:column>
+
+					<p:column headerText="Updated By">
+						<h:outputText value="#{assetSubType.updatedBy}" />
+
+					</p:column>
+
+					<p:column headerText="Updated Date">
+						<h:outputText value="#{assetSubType.updatedDate}" />
+					</p:column>
+
+
+					<p:column style="width:50px">
+						<p:rowEditor />
+					</p:column>
+					<p:column style="width:50px">
+						<p:commandLink
+							actionListener="#{assetTypeBean.removeAssetSubType(assetSubType)}"
+							immediate="true" update=":form:assetSubTypesPanel">
+							<span class="ui-icon ui-icon-trash"></span>
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

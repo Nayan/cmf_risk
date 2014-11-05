@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="Copy Income Generating Asset Sub-types" />
+			</p:breadCrumb>
+			<p:spacer height="20px;" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<p:spacer height="20px;" />
+
+			<p:panel header="Copy Income Generating Asset Sub-types"
+				styleClass="medium_input_table">
+				<p:spacer height="10px" />
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Income Generating Asset Type:" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{assetTypeBean.assetTypeId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.assetTypes}" />
+								<p:ajax update=":form:assetSubTypesPickList"
+									listener="#{assetTypeBean.populateAssetSubTypesForSourceAndDestinationBranch}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Source Branch:" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{assetTypeBean.sourceBranchId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{loginBean.branchOffices}" />
+								<p:ajax update=":form:assetSubTypesPickList"
+									listener="#{assetTypeBean.populateAssetSubTypesForSourceBranch}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Destination Branch:" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{assetTypeBean.destinationBranchId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{loginBean.branchOffices}" />
+								<p:ajax update=":form:assetSubTypesPickList"
+									listener="#{assetTypeBean.populateAssetSubTypesForDestBranch}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:spacer height="10px" />
+				<p:separator id="separator" />
+				<p:spacer height="10px" />
+
+				<p:pickList id="assetSubTypesPickList"
+					value="#{assetTypeBean.dualAssetSubTypes}" var="assetSubType"
+					itemValue="#{assetSubType}" converter="#{assetSubTypeConverter}"
+					itemLabel="#{assetSubType.assetSubTypeId}" showSourceFilter="true"
+					showTargetFilter="true" filterMatchMode="contains">
+					<f:facet name="sourceCaption">Available SubTypes at source Branch</f:facet>
+					<f:facet name="targetCaption">Destination SubTypes</f:facet>
+					<p:column>
+						<h:outputText value="#{assetSubType.name}" />
+					</p:column>
+				</p:pickList>
+
+				<h:panelGrid columns="3" cellpadding="25"
+					styleClass="big_table_wide">
+
+					<p:commandButton value="Submit" ajax="false" icon="ui-icon-check"
+						action="#{assetTypeBean.saveAssetSubTypesForDestinationBranch}" />
+				</h:panelGrid>
+
+			</p:panel>
+
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

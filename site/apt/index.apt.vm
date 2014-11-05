@@ -1,0 +1,3 @@
+Welcome to ${project.name}!
+
+ The ${project.name} project is Java Enterprise application built on a {{{http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html}JSF}} , {{{http://www.springsource.org/}Spring}} and {{{http://en.wikipedia.org/wiki/Java_Persistence_API}JPA}} stack  

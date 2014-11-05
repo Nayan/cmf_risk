@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<ui:repeat var="loan"
+			value="#{customerBean.customer.externalLoanDTOs}" varStatus="count">
+			<p:fieldset legend="Loan #{count.index + 1}">
+				<p:panelGrid cellpadding="25" styleClass="no_margin"
+					style="width:100%">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="MFI Name: #{loan.externalOrganizationName}" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="Loan Status: #{loan.status}" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="Outstanding Amount: #{loan.pendingAmount}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="Loan Amount: #{loan.loanAmount}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+			<p:spacer height="20"></p:spacer>
+		</ui:repeat>
+	</ui:composition>
+</h:body>
+</html>

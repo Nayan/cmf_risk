@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="viewLoanForm" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="#{auditBean.entityName}" url="view_employee.jsf"
+					rendered="#{auditBean.entityType.entityId == 1}">
+					<f:param name="id" value="#{auditBean.entityId}"></f:param>
+				</p:menuitem>
+				<p:menuitem value="#{auditBean.entityName}" url="view_employee.jsf"
+					rendered="#{auditBean.entityType.entityId == 2}">
+					<f:param name="id" value="#{auditBean.entityId}"></f:param>
+				</p:menuitem>
+				<p:menuitem value="#{auditBean.entityName}"
+					action="#{centerBean.viewCenter(auditBean.entityId)}"
+					rendered="#{auditBean.entityType.entityId == 3}"></p:menuitem>
+				<p:menuitem value="#{auditBean.audit.name}" url="#"></p:menuitem>
+			</p:breadCrumb>
+			<p:spacer width="20" />
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="#{auditBean.audit.name} Audit Process"
+					styleClass="bold" />
+			</h:panelGrid>
+			<p:spacer height="20"></p:spacer>
+			<p:dataTable id="auditQuestionsTable" var="auditQuestion"
+				value="#{auditBean.audit.auditQuestionDTOs}"
+				styleClass="big_table_wide_left">
+
+				<p:column>
+					<h:outputText value="#{auditQuestion.questionString}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="#{auditQuestion.obtainedScore}" />
+					<p:selectBooleanCheckbox disabled="true"
+						value="#{auditQuestion.negativeQuestionTicked}"
+						rendered="#{auditQuestion.negativeScore == true}"></p:selectBooleanCheckbox>
+				</p:column>
+
+			</p:dataTable>
+			<p:spacer height="20"></p:spacer>
+
+			<p:separator></p:separator>
+			<h:panelGrid columns="1" id="actionItemsGrid"
+				styleClass="big_table_wide">
+				<h:outputText value="Action Items" styleClass="bold" />
+			</h:panelGrid>
+			<h:panelGrid columns="2" id="auditFollowupGrid"
+				styleClass="big_table_wide" cellpadding="15">
+				<h:panelGrid columns="2">
+					<h:outputText value="Action Plan  :" />
+					<p:inputTextarea rows="7" cols="60" readonly="true"
+						value="#{auditBean.audit.actionPlan}"></p:inputTextarea>
+				</h:panelGrid>
+				<h:panelGrid columns="4">
+					<h:panelGroup>
+						<h:outputText
+							value="Action Owner:  #{auditBean.audit.actionOwner}" />
+						<p:spacer width="20px"></p:spacer>
+					</h:panelGroup>
+					<h:panelGroup>
+						<h:outputText value="Action Plan followup Date:" />
+						<p:spacer width="20px"></p:spacer>
+					</h:panelGroup>
+					<h:outputText value="#{auditBean.audit.followUpDate}"></h:outputText>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<h:outputText value="Action Taken:" />
+					<p:inputTextarea rows="7" cols="60" readonly="true"
+						value="#{auditBean.audit.actionTaken}"></p:inputTextarea>
+				</h:panelGrid>
+				<h:panelGrid columns="2" id="auditCommentsGrid"
+					styleClass="big_table_wide">
+					<h:outputText value="Auditor comments" styleClass="bold" />
+					<p:inputTextarea rows="7" cols="90" readonly="true"
+						value="#{auditBean.audit.auditorComments}"></p:inputTextarea>
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<p:spacer height="20"></p:spacer>
+
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

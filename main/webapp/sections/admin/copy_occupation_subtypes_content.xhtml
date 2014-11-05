@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="Copy Occupation Sub-types" />
+			</p:breadCrumb>
+			<p:spacer height="20px;" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<p:spacer height="20px;" />
+
+			<p:panel header="Copy Occupation Sub-types"
+				styleClass="medium_input_table">
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Occupation Type:" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{occupationTypeBean.occupationTypeId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.occupationTypes}" />
+								<p:ajax update=":form:occupationSubTypesPickList"
+									listener="#{occupationTypeBean.populateOccupationSubTypesForSourceAndDestinationBranch}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Source Branch:" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu value="#{occupationTypeBean.sourceBranchId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{loginBean.branchOffices}" />
+								<p:ajax update=":form:occupationSubTypesPickList"
+									listener="#{occupationTypeBean.populateOccupationSubTypesForSourceBranch}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Destination Branch:" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectOneMenu
+								value="#{occupationTypeBean.destinationBranchId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{loginBean.branchOffices}" />
+								<p:ajax update=":form:occupationSubTypesPickList"
+									listener="#{occupationTypeBean.populateOccupationSubTypesForDestBranch}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:spacer height="10px" />
+				<p:separator id="separator" />
+				<p:spacer height="10px" />
+
+				<p:pickList id="occupationSubTypesPickList"
+					value="#{occupationTypeBean.dualOccupationSubTypes}"
+					var="occupationSubType" itemValue="#{occupationSubType}"
+					converter="#{occupationSubTypeConverter}"
+					itemLabel="#{occupationSubType.occupationSubTypeId}"
+					showSourceFilter="true" showTargetFilter="true"
+					filterMatchMode="contains">
+					<f:facet name="sourceCaption">Available SubTypes at source Branch</f:facet>
+					<f:facet name="targetCaption">Destination SubTypes</f:facet>
+					<p:column>
+						<h:outputText value="#{occupationSubType.name}" />
+					</p:column>
+				</p:pickList>
+
+				<p:panelGrid columns="3" cellpadding="25"
+					styleClass="big_table_wide">
+					<p:spacer />
+					<p:commandButton value="Submit" ajax="false" icon="ui-icon-check"
+						action="#{occupationTypeBean.saveOccupationSubTypesForDestinationBranch}" />
+					<p:spacer />
+				</p:panelGrid>
+
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

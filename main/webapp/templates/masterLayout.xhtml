@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><ui:insert name="windowTitle" />
+	</title>
+	<h:outputStylesheet library="css" name="main.css" />
+</h:head>
+
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" id="heading" size="80">
+			<ui:insert name="heading">
+				<ui:include src="/sections/login/header.xhtml" />
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200" header="Quick Links"
+			id="sidebarLeft" resizable="true" collapsible="true">
+			<ui:insert name="sidebarLeft">
+				<ui:include src="/sections/login/sidebarLeft.xhtml" />
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center" id="content">
+			<ui:insert name="content" />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="50" header="" resizable="true"
+			collapsible="true">
+			<h:outputText
+				value="Copyright © 2012 Chaitanya.All rights reserved.Terms of Use Privacy Policy." />
+			<a href="http://www.confluxtechnologies.com">Conflux Technologies</a>
+		</p:layoutUnit>
+
+		<ui:debug hotkey="l"/>
+	</p:layout>
+</h:body>
+</html>

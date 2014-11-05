@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<ui:repeat var="asset"
+			value="#{customerBean.customer.incomeGeneratingAssetDTOs}"
+			varStatus="count" id="assetDataUpdate">
+			<h:panelGrid columns="2">
+				<h:column>
+					<p:fieldset legend="Asset #{count.index + 1}">
+						<p:panelGrid cellpadding="25" styleClass="no_margin"
+							style="width:100%">
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText value="Asset Type: #{asset.assetTypeDTO.name}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="Asset Subtype: #{asset.assetSubTypeDTO.name}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText id="calculatedIncome"
+										value="Annual Income: #{asset.calculatedIncome}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText
+										value="#{asset.assetSubTypeDTO.multiplierFieldLabel} (Multiplier): " />
+									<p:inputText value="#{asset.multiplierValue}">
+										<p:ajax immediate="false"
+											listener="#{customerBean.calculateAssetValue(count.index)}"
+											update=":form:clientSectionsTabView:editClientAsset"></p:ajax>
+									</p:inputText>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText value="Additional Details" styleClass="bold"
+										rendered="#{asset.assetSubTypeDTO.additionalFieldPresent}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="3">
+									<h:outputText
+										rendered="#{asset.assetSubTypeDTO.additionalFieldPresent}"
+										value="#{asset.assetSubTypeDTO.additionalFieldLabel}: " />
+									<p:inputText value="#{asset.additionalFieldValue}"
+										rendered="#{asset.assetSubTypeDTO.additionalFieldPresent}"></p:inputText>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:fieldset>
+				</h:column>
+				<h:column>
+					<p:panelGrid columns="1" cellspacing="25"
+						styleClass="big_table_wide"
+						rendered="#{customerBean.editAssetsFlag == true}">
+						<f:facet name="footer">
+							<p:commandLink action="#{customerBean.removeAsset(count.index)}"
+								ajax="false"
+								update=":form:clientSectionsTabView:clientAssetSectionsTab">
+								<h:graphicImage library="images" name="delete-1.png" />
+							</p:commandLink>
+						</f:facet>
+					</p:panelGrid>
+				</h:column>
+			</h:panelGrid>
+
+			<p:spacer height="20"></p:spacer>
+
+		</ui:repeat>
+	</ui:composition>
+</h:body>
+</html>

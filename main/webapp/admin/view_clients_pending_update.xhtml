@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<p:breadCrumb>
+			<p:menuitem value="Home" url="/" />
+			<p:menuitem value="Search Loans without Loan numbers" url="#" />
+		</p:breadCrumb>
+		<h:form id="form" styleClass="big_form">
+			<p:spacer height="20"></p:spacer>
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="Loan search results" styleClass="h1" />
+			</h:panelGrid>
+
+			<p:dataTable id="loans" var="loanT" value="#{searchBean.loanTs}"
+				paginator="true" rows="10"
+				emptyMessage="No loans found with given criteria"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,50,100">
+
+				<p:column sortBy="#{loanT.officeName}"
+					filterBy="#{loanT.officeName}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Parent Office" />
+					</f:facet>
+					<h:outputText value="#{loanT.officeName}" />
+				</p:column>
+				<p:column sortBy="#{loanT.customerName}"
+					filterBy="#{loanT.customerName}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Customer Name" />
+					</f:facet>
+					<h:outputText value="#{loanT.customerName}" />
+				</p:column>
+				<p:column sortBy="#{loanT.pledgeNumber}"
+					filterBy="#{loanT.pledgeNumber}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Pledge Number" />
+					</f:facet>
+					<h:outputText value="#{loanT.pledgeNumber}" />
+				</p:column>
+				<p:column sortBy="#{loanT.loanNumber}"
+					filterBy="#{loanT.loanNumber}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Loan Number" />
+					</f:facet>
+					<h:outputText value="#{loanT.loanNumber}" />
+				</p:column>
+				<p:column sortBy="#{loanT.externalId}"
+					filterBy="#{loanT.externalId}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="External Identifier" />
+					</f:facet>
+					<h:outputText value="#{loanT.externalId}" />
+				</p:column>
+				<p:column sortBy="#{loanT.sanctionedAmount}"
+					filterBy="#{loanT.sanctionedAmount}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Loan Amount" />
+					</f:facet>
+					<h:outputText value="#{loanT.sanctionedAmount}">
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="#{loanT.repaymentFrequency}"
+					filterBy="#{loanT.repaymentFrequency}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Repayment Frequency" />
+					</f:facet>
+					<h:outputText value="#{loanT.repaymentFrequency}">
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="#{loanT.repaymentType}"
+					filterBy="#{loanT.repaymentType}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Repayment Type" />
+					</f:facet>
+					<h:outputText value="#{loanT.repaymentType}" />
+				</p:column>
+				<p:column style="width:50px">
+					<p:commandLink action="#{loanBean.viewLoan(loanT.id)}"
+						immediate="true" ajax="false">
+						<span class="ui-icon ui-icon-search"></span>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+
+			<!-- Export -->
+			<h:panelGrid columns="2">
+				<p:panel header="Export All Loans">
+					<h:commandLink>
+						<h:graphicImage library="images" name="excel.png" />
+						<p:dataExporter type="xls" target="loans" fileName="loans" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="pdf.png" />
+						<p:dataExporter type="pdf" target="loans" fileName="loans" />
+					</h:commandLink>
+
+
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="xml.png" />
+						<p:dataExporter type="xml" target="loans" fileName="loans" />
+					</h:commandLink>
+				</p:panel>
+
+				<p:panel header="Export Visible Loans">
+					<h:commandLink>
+						<h:graphicImage library="images" name="excel.png" />
+						<p:dataExporter type="xls" target="loans" fileName="loans"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="pdf.png" />
+						<p:dataExporter type="pdf" target="loans" fileName="loans"
+							pageOnly="true" />
+					</h:commandLink>
+
+
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="xml.png" />
+						<p:dataExporter type="xml" target="loans" fileName="loans"
+							pageOnly="true" />
+					</h:commandLink>
+				</p:panel>
+			</h:panelGrid>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

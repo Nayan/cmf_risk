@@ -1,0 +1,141 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{loanBean.viewLoanAccount(param.id)}"></f:event>
+		</f:metadata>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="#{loanBean.loanAccount.officeName}"></p:menuitem>
+				<p:menuitem value="#{loanBean.loanAccount.centerName}" />
+				<p:menuitem value="#{loanBean.loanAccount.clientName}" />
+				<p:menuitem
+					value="Loan #{loanBean.loanAccount.loanProductName}- #{loanBean.loanAccount.externalId}"></p:menuitem>
+			</p:breadCrumb>
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+
+			<p:panel styleClass="big_input_table">
+				<p:panelGrid styleClass="fixed_big_table no_margin">
+					<p:row>
+						<p:column colspan="1">
+							<p:panelGrid cellpadding="25" styleClass="no_margin">
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Loan Type :" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="#{loanBean.loanAccount.loanProductName}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Delfix Loan Number :" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="#{loanBean.loanAccount.externalId}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Loan Amount :" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="#{loanBean.loanAccount.amount}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Stated Purpose :" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText
+											value="#{loanBean.loanAccount.loanOriginalPurpose}" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:column>
+
+					</p:row>
+				</p:panelGrid>
+
+				<p:spacer height="20"></p:spacer>
+				<p:separator></p:separator>
+				<h:outputText value="Loan Utilization Check History"
+					styleClass="bold" />
+				<p:spacer height="20"></p:spacer>
+
+				<ui:repeat var="luc"
+					value="#{loanBean.loanAccount.loanUtilizationCheckDTOs}"
+					varStatus="count">
+					<p:fieldset legend="Loan Utilization Check #{count.index + 1}">
+						<p:panelGrid cellpadding="25" styleClass="no_margin"
+							style="width:100%">
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText value="Loan Purpose 1:" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="#{luc.loanPurposeName1}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="Percentage of Amount used:" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="#{luc.utilizationPercentage1}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText value="Loan Purpose 2:" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="#{luc.loanPurposeName2}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="Percentage of Amount used:" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="#{luc.utilizationPercentage2}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText value="Loan Purpose 3:" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="#{luc.loanPurposeName3}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="Percentage of Amount used:" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText value="#{luc.utilizationPercentage3}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2">
+									<h:outputText
+										value="Loan Utilization checked done by #{luc.createdBy} on #{luc.createdDate}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:fieldset>
+					<p:spacer height="20"></p:spacer>
+				</ui:repeat>
+
+
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

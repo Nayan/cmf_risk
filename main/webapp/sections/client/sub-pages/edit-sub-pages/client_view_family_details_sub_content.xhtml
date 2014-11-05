@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<ui:repeat var="familyMember"
+			value="#{customerBean.customer.familyMemberDTOs}" varStatus="count">
+			<h:panelGrid columns="2">
+				<h:column>
+					<p:fieldset legend="Family Member #{count.index + 1}">
+						<p:panelGrid cellpadding="25" styleClass="no_margin"
+							style="width:100%">
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText
+										value="Name: #{familyMember.firstName} #{familyMember.lastName}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="Relationship: #{familyMember.relationship}" />
+								</p:column>
+								<p:column colspan="1">
+									<h:outputText
+										value="Date of Birth: #{familyMember.dateOfBirth}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="1">
+									<h:outputText value="Health Issues: #{familyMember.unwell}" />
+								</p:column>
+								<p:column colspan="2">
+									<h:outputText rendered="#{familyMember.unwell == true}"
+										value="Description: #{familyMember.healthDescription}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:fieldset>
+				</h:column>
+				<h:column>
+					<p:panelGrid columns="1" cellspacing="25"
+						styleClass="big_table_wide"
+						rendered="#{customerBean.editFamilyDetailsFlag == true}">
+						<f:facet name="footer">
+							<p:commandLink action="#{customerBean.removeFamilyMember(count.index)}"
+								ajax="false"
+								update=":form:clientSectionsTabView:clientFamilyDetailsSectionsTab">
+								<h:graphicImage library="images" name="delete-1.png" />
+							</p:commandLink>
+						</f:facet>
+					</p:panelGrid>
+				</h:column>
+			</h:panelGrid>
+			<p:spacer height="20"></p:spacer>
+		</ui:repeat>
+	</ui:composition>
+</h:body>
+</html>

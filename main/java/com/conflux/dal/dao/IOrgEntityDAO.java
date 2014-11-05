@@ -1,0 +1,1 @@
+package com.conflux.dal.dao;import java.util.List;import com.conflux.dal.bo.OrgEntity;public interface IOrgEntityDAO {	public abstract void persist(OrgEntity orgEntity);	public abstract void merge(OrgEntity orgEntity);	public abstract void delete(OrgEntity orgEntity);	public abstract List<OrgEntity> findAll();	public abstract OrgEntity findById(int orgEntityId);}

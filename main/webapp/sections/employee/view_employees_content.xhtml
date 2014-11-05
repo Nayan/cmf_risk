@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="View employees in progress" url="#" />
+			</p:breadCrumb>
+			<p:spacer height="20"></p:spacer>
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				
+				<p:column colspan="1">
+					<h:outputText value="Select a Branch: "/>
+					<p:spacer width="10"></p:spacer>					
+					<p:selectOneMenu value="#{employeeBean.branchId}" required="true"
+						requiredMessage="Please select a Branch Office" style="marging-left:10px;">
+						<f:selectItem itemLabel="Select A Branch" itemValue="" />
+						<f:selectItems value="#{loginBean.branchOffices}" />
+						<p:ajax update=":form:employees"
+							listener="#{employeeBean.getAllEmployees}" />
+
+					</p:selectOneMenu>
+					
+				</p:column>
+			
+			</h:panelGrid>
+
+			<p:spacer height="30"></p:spacer>
+			<p:separator></p:separator>
+
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="Employee Search Results" styleClass="h1" />
+			</h:panelGrid>
+
+			<p:panel>
+
+				<p:dataTable id="employees" var="employee"
+					value="#{employeeBean.employees}" paginator="true" rows="10"
+					emptyMessage="No employees found with given criteria"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15,20,50,100">
+
+					<p:column sortBy="#{employee.firstName} #{employee.lastName}"
+						filterBy="#{employee.firstName} #{employee.lastName}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Name" />
+						</f:facet>
+						<h:outputText value="#{employee.firstName} #{employee.lastName}" />
+					</p:column>
+					<p:column sortBy="#{employee.employeeRole}"
+						filterBy="#{employee.employeeRole}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Designation" />
+						</f:facet>
+						<h:outputText value="#{employee.employeeRole}" />
+					</p:column>
+
+					<p:column headerText="Branch">
+						<h:outputText value="#{employee.officeName}" />
+					</p:column>
+
+					<p:column headerText="Reports To">
+						<h:outputText value="#{employee.supervisorName}" />
+					</p:column>
+
+					<p:column headerText="Phone Number">
+						<h:outputText value="#{employee.contactPhNo}" />
+
+					</p:column>
+
+					<p:column style="width:50px">
+						<p:commandLink action="view_employee" immediate="true"
+							ajax="false">
+							<f:param name="id" value="#{employee.employeeId}"></f:param>
+							<span class="ui-icon ui-icon-search"></span>
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+
+				<!-- Export -->
+				<h:panelGrid columns="2">
+					<p:panel header="Export All employees">
+						<h:commandLink>
+							<h:graphicImage library="images" name="excel.png" />
+							<p:dataExporter type="xls" target="employees"
+								fileName="employees" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<h:graphicImage library="images" name="pdf.png" />
+							<p:dataExporter type="pdf" target="employees"
+								fileName="employees" />
+						</h:commandLink>
+
+
+
+						<h:commandLink>
+							<h:graphicImage library="images" name="xml.png" />
+							<p:dataExporter type="xml" target="employees"
+								fileName="employees" />
+						</h:commandLink>
+					</p:panel>
+
+					<p:panel header="Export Visible employees">
+						<h:commandLink>
+							<h:graphicImage library="images" name="excel.png" />
+							<p:dataExporter type="xls" target="employees"
+								fileName="employees" pageOnly="true" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<h:graphicImage library="images" name="pdf.png" />
+							<p:dataExporter type="pdf" target="employees"
+								fileName="employees" pageOnly="true" />
+						</h:commandLink>
+
+
+
+						<h:commandLink>
+							<h:graphicImage library="images" name="xml.png" />
+							<p:dataExporter type="xml" target="employees"
+								fileName="employees" pageOnly="true" />
+						</h:commandLink>
+					</p:panel>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

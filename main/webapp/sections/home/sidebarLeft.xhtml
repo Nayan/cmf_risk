@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition>
+		<h:form>
+
+			<h:panelGrid columns="1">
+				<h:outputText value="Risk Management" styleClass="bold" />
+				<p:spacer height="15" />
+				<h:panelGroup>
+					<p:commandLink ajax="false" action="enter_attendance.xhtml">
+						<h:graphicImage library="images" name="attendance.png" />
+						<p:spacer width="10" />
+						<h:outputText value="Enter attendance sheet" />
+					</p:commandLink>
+				</h:panelGroup>
+				<p:spacer height="15" />
+				<h:panelGroup>
+					<p:commandLink ajax="false" action="/pages/view_centers_with_clients_pending_update.xhtml">
+						<h:graphicImage library="images" name="user_warning.png" />
+						<p:spacer width="10" />
+						<h:outputText value="View Clients with pending updates" />
+					</p:commandLink>
+				</h:panelGroup>
+				<p:spacer height="15" />
+				<h:panelGroup>
+					<p:commandLink ajax="false" action="#{loanBean.pendingLucs}">
+						<h:graphicImage library="images" name="coins.png" />
+						<p:spacer width="10" />
+						<h:outputText value="View pending LUC's(Loan Utilization check's)" />
+					</p:commandLink>
+				</h:panelGroup>
+				<p:spacer height="5" />
+				<p:spacer height="30" />
+				<h:outputText value="Audit Management" styleClass="bold" />
+				<p:spacer height="15" />
+				<h:panelGroup>
+					<p:commandLink ajax="false"
+						action="/audits/audits_in_progress.xhtml">
+						<h:graphicImage library="images" name="current.png" />
+						<p:spacer width="10" />
+						<h:outputText value="View Current Audits" />
+					</p:commandLink>
+				</h:panelGroup>
+
+			</h:panelGrid>
+
+		</h:form>
+
+
+	</ui:composition>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{auditTypeBean.viewAuditType(param.id)}"></f:event>
+		</f:metadata>
+		<h:form id="form" styleClass="big_form">
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="View All Audit Types"
+					url="/admin/view_audit_types.jsf"></p:menuitem>
+				<p:menuitem value="#{auditTypeBean.auditTypeDTO.name}" url="#" />
+			</p:breadCrumb>
+			<p:spacer height="20px;" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<p:spacer height="20px;" />
+
+			<p:panel header="View Audit Details" styleClass="big_input_table">
+				<p:panelGrid cellpadding="25">
+					<p:row>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Audit Process Name :" styleClass="bold" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="#{auditTypeBean.auditTypeDTO.name}">
+							</h:outputText>
+						</p:column>
+						<p:column colspan="1" styleClass="right">
+							<h:outputText value="Applies To :" styleClass="bold" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{auditTypeBean.auditTypeDTO.entityType.toString()}"></h:outputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:spacer height="30px" />
+
+				<p:dataTable id="auditQuestions" var="question"
+					value="#{auditTypeBean.auditTypeDTO.questionDTOs}">
+
+					<p:column headerText="Question">
+						<h:outputText value="#{question.questionString}" />
+					</p:column>
+
+					<p:column headerText="Score Type?">
+						<h:outputText value="Range" rendered="#{!question.negativeScore}" />
+						<h:outputText value="Negative"
+							rendered="#{question.negativeScore}" />
+					</p:column>
+
+					<p:column headerText="Score">
+						<h:outputText value="#{question.minScore} to #{question.maxScore}" />
+					</p:column>
+
+					<p:column headerText="Default Score">
+						<h:outputText value="#{question.defaultScore}" />
+					</p:column>
+
+					<p:column headerText="Created By">
+						<h:outputText value="#{question.createdBy}" />
+					</p:column>
+
+					<p:column headerText="Created Date">
+						<h:outputText value="#{question.createdDate}" />
+					</p:column>
+
+					<p:column headerText="Updated By">
+						<h:outputText value="#{question.updatedBy}" />
+					</p:column>
+
+					<p:column headerText="Updated Date">
+						<h:outputText value="#{question.updatedDate}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+
+			<p:panel header="Scoring Transalation Matrix"
+				styleClass="medium_input_table" id="transalationMatrix">
+				<ui:repeat var="auditTypeScoring"
+					value="#{auditTypeBean.auditTypeDTO.auditTypeScoringDTOs}"
+					varStatus="count">
+					<p:panelGrid columns="1" cellpadding="25">
+
+						<h:panelGroup>
+							<h:outputText value="Scores #{auditTypeScoring.minScore}" />
+							<h:outputText value="    To    " />
+							<h:outputText value="#{auditTypeScoring.maxScore}" />
+							<h:outputText value="    = Bucket  #{count.index +1} " />
+						</h:panelGroup>
+					</p:panelGrid>
+				</ui:repeat>
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

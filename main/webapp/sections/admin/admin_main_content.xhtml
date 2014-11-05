@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form>
+			<p:panel styleClass="big_table_wide" header="Administrative Tasks">
+				<h:panelGrid columns="3" styleClass="big_table_wide">
+					<h:outputText value="Click a link below to begin" />
+				</h:panelGrid>
+
+				<p:spacer height="30"></p:spacer>
+				<p:separator></p:separator>
+
+				<h:panelGrid columns="3" styleClass="big_table">
+
+					<h:outputText value="Users" styleClass="bold" />
+					<h:outputText value="Data display and rules" styleClass="bold" />
+					<h:outputText value="Audits" styleClass="bold" />
+
+					<p:spacer height="20"></p:spacer>
+					<p:spacer height="20"></p:spacer>
+					<p:spacer height="20"></p:spacer>
+
+
+					<p:commandLink ajax="false" action="#{userBean.viewAllUsers}">
+						<h:graphicImage library="images" name="users_big.png" />
+						<p:spacer width="10" />
+						<h:outputText value="View System Users" />
+					</p:commandLink>
+					<h:outputLink value="create_occupation_subtype.jsf">
+						<h:graphicImage library="images" name="job.png" />
+						<p:spacer width="10" />
+						<h:outputText value="Define occupation subtypes (Branch level)" />
+					</h:outputLink>
+					<p:commandLink ajax="false"
+						action="#{auditTypeBean.newAuditType()}" immediate="true">
+						<h:graphicImage library="images" name="create.png" />
+						<p:spacer width="10" />
+						<h:outputText value="Create an Audit" />
+					</p:commandLink>
+
+					<p:commandLink action="#{userBean.navigateToNewUserPage}"
+						ajax="false">
+						<h:graphicImage library="images" name="add-user-big.png" />
+						<p:spacer width="10" />
+						<h:outputText value="Create a New User" />
+					</p:commandLink>
+					<p:commandLink ajax="false" action="copy_occupation_subtypes">
+						<h:graphicImage library="images" name="copy1.png" />
+						<p:spacer width="10" />
+						<h:outputText value="Copy occupation subtypes" />
+					</p:commandLink>
+					<p:commandLink ajax="false" action="view_audit_types">
+						<h:graphicImage library="images" name="view_big.png" />
+						<p:spacer width="10" />
+						<h:outputText value="View All Audits" />
+					</p:commandLink>
+
+					<p:spacer></p:spacer>
+					<p:commandLink ajax="false" action="create_iga_subtype">
+						<h:graphicImage library="images" name="asset.png" />
+						<p:spacer width="10" />
+						<h:outputText value="Define income generating asset subtypes" />
+					</p:commandLink>
+
+					<p:spacer></p:spacer>
+					<p:spacer></p:spacer>					
+					<p:commandLink ajax="false" action="copy_iga_subtype">
+						<h:graphicImage library="images" name="copy2.png" />
+						<p:spacer width="10" />
+						<h:outputText value="Copy income generating asset subtypes" />
+					</p:commandLink>
+					<p:commandLink ajax="false" action="calculate_risk_rating">
+						<h:graphicImage library="images" name="rating_12.jpg" style="width:50px;height=50px;" />
+						<p:spacer width="10" />
+						<h:outputText value="Risk Rating Calculation" />
+					</p:commandLink>
+				</h:panelGrid>
+			</p:panel>
+
+
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

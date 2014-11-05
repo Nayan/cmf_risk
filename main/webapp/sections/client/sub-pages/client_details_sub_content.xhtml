@@ -1,0 +1,361 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:panelGrid id="viewClientDetails"
+			rendered="#{customerBean.editClientFlag == false}">
+			<p:spacer height="20"></p:spacer>
+			<p:fieldset legend="Occupation Details">
+				<p:panelGrid cellpadding="25"
+					styleClass="fixed_small_table no_margin">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="Employed :" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="#{customerBean.customer.employed}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="Occupation :"
+								rendered="#{customerBean.customer.employed == true}" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								rendered="#{customerBean.customer.employed == true}"
+								value="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.name}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText
+								rendered="#{customerBean.customer.employed == true}"
+								value="Annual Income:" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								rendered="#{customerBean.customer.employed == true}"
+								value="#{customerBean.customer.occupationDTO.calculatedIncome}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:spacer height="10"></p:spacer>
+				<p:panelGrid cellpadding="25" styleClass="table_border_1px"
+					rendered="#{customerBean.customer.employed == true and customerBean.customer.occupationDTO.occupationSubTypeDTO.incomeLumpingRequired == true}">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="Jan" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="Feb" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="March" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="April" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="May" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="June" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.jan}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.feb}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.march}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.april}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.may}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.june}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="6">
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="July" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="August" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="September" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="October" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="November" />
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="December" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.july}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.august}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.sept}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.october}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.nov}"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText
+								value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.december}"></h:outputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+			<p:panelGrid columns="3" cellspacing="25" styleClass="big_table_wide">
+				<f:facet name="footer">
+					<p:commandButton value="Edit" icon="ui-icon-pencil"
+						actionListener="#{customerBean.editClient}"
+						update=":form:clientSectionsTabView:clientDetailsSectionsTab" />
+					<p:spacer width="20px;" />
+					
+				</f:facet>
+			</p:panelGrid>
+		</h:panelGrid>
+		<h:panelGrid id="editClientDetails"
+			rendered="#{customerBean.editClientFlag == true}">
+			<p:fieldset legend="Occupation Details">
+				<p:panelGrid cellpadding="25" styleClass="no_margin">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="Employed :" />
+						</p:column>
+						<p:column colspan="1">
+							<p:selectBooleanCheckbox
+								value="#{customerBean.customer.employed}">
+								<p:ajax update=":form:clientSectionsTabView:editClientDetails" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid cellpadding="25" styleClass="no_margin"
+					id="editClientOccupationDetails"
+					rendered="#{customerBean.customer.employed == true}">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText value="Occupation Type: " />
+							<p:selectOneMenu
+								value="#{customerBean.customer.occupationDTO.occupationTypeId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{appBean.occupationTypes}"></f:selectItems>
+								<p:ajax update=":form:clientSectionsTabView:editClientDetails"
+									listener="#{customerBean.handleCustomerOccupationTypeChange}"></p:ajax>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText value="Occupation Subtype:" />
+							<p:selectOneMenu
+								value="#{customerBean.customer.occupationDTO.occupationSubTypeId}">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{customerBean.occupationSubTypes}"></f:selectItems>
+								<p:ajax update=":form:clientSectionsTabView:editClientDetails"
+									listener="#{customerBean.calculateOccupationValue}"></p:ajax>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column colspan="1">
+							<h:outputText id="clientOccupationCalculatedIncome"
+								value="Annual Income: #{customerBean.customer.occupationDTO.calculatedIncome}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText
+								rendered="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.multiplierPresent}"
+								value="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.multiplierLabel} (Multiplier):  " />
+
+							<p:inputText
+								rendered="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.multiplierPresent}"
+								value="#{customerBean.customer.occupationDTO.multiplierValue}">
+								<p:ajax listener="#{customerBean.calculateOccupationValue}"
+									update=":form:clientSectionsTabView:clientOccupationCalculatedIncome"></p:ajax>
+							</p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText value="Additional Details" styleClass="bold"
+								rendered="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.additionalFieldPresent}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText
+								rendered="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.additionalFieldPresent}"
+								value="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.additionalFieldLabel}:" />
+							<p:inputText
+								value="#{customerBean.customer.occupationDTO.additionalFieldValue}"
+								rendered="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.additionalFieldPresent}"></p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText value="Income Lumping Details" styleClass="bold"
+								rendered="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.incomeLumpingRequired == true}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<p:panelGrid cellpadding="25" styleClass="no_margin"
+								rendered="#{customerBean.customer.occupationDTO.occupationSubTypeDTO.incomeLumpingRequired == true}">
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Jan" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="Feb" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="March" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="April" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.jan}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.feb}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.march}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.april}"></p:inputText>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="May" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="June" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="July" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="August" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.may}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.june}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.july}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.august}"></p:inputText>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="September" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="October" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="November" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="December" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.sept}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.october}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.nov}"></p:inputText>
+									</p:column>
+									<p:column colspan="1">
+										<p:inputText
+											value="#{customerBean.customer.occupationDTO.incomeLumpingDTO.december}"></p:inputText>
+									</p:column>
+								</p:row>
+
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+			<p:panelGrid columns="3" cellspacing="25" styleClass="big_table_wide">
+				<f:facet name="footer">
+					<p:commandButton value="Cancel Edit" icon="ui-icon-trash"
+						actionListener="#{customerBean.cancelEditClient}"
+						update=":form:clientSectionsTabView:clientDetailsSectionsTab" />
+					<p:spacer width="20px;" />
+					<p:commandButton value="Save" icon="ui-icon-check"
+						actionListener="#{customerBean.saveOrUpdateOccupation}"
+						update=":form:clientSectionsTabView:clientDetailsSectionsTab" />
+				</f:facet>
+			</p:panelGrid>
+		</h:panelGrid>
+	</ui:composition>
+</h:body>
+</html>

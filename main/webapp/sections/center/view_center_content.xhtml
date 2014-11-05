@@ -1,0 +1,257 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="form" styleClass="big_form" prependId="false">
+			<p:breadCrumb>
+				<p:menuitem value="Categories" url="/" />
+				<p:menuitem value="#{centerBean.center.displayName}" url="#" />
+			</p:breadCrumb>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<h:panelGrid columns="2" id="customerPanel"
+				styleClass="big_table_wide_left">
+
+				<h:panelGrid columns="1" id="centerDetailsPanel"
+					styleClass="big_table_wide_left">
+
+					<h:panelGrid columns="2" styleClass="table_border_spacing">
+
+						<h:outputText value="Name" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<h:outputText value="#{centerBean.center.displayName}"></h:outputText>
+						</h:panelGroup>
+
+						<h:outputLabel value="Delfix Center Id" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<h:outputText value="#{centerBean.center.externalId}"></h:outputText>
+						</h:panelGroup>
+
+						<h:outputLabel value="BM Rating" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<p:inplace editor="true" id="bmRating">
+								<h:selectOneMenu value="#{centerBean.center.bmRating}" >  
+				                    <f:selectItem itemLabel="0" itemValue="0" />  
+				                    <f:selectItem itemLabel="1" itemValue="1" />  
+				                    <f:selectItem itemLabel="2" itemValue="2" />
+				                    <f:selectItem itemLabel="3" itemValue="3" />
+				                    <f:selectItem itemLabel="4" itemValue="4" />
+				                    <f:selectItem itemLabel="5" itemValue="5" />
+				                </h:selectOneMenu>
+				                <p:ajax event="save" listener="#{centerBean.updateBMRating}" update="bmratingmsgs" />
+							</p:inplace>
+							<p:growl id="bmratingmsgs" />
+						</h:panelGroup>
+
+						<h:outputLabel value="Problem Description" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<p:inplace editor="true" id="bmProblemDescription">
+								<p:inputTextarea rows="5" cols="30" counter="counter1" maxlength="100"       
+								    counterTemplate="{0} characters remaining." autoResize="false" value="#{centerBean.center.bmProblemDescription}"/>  
+								<h:outputText id="counter1" />
+				                <p:ajax event="save" listener="#{centerBean.updateBMProblemDescription}" update="bmpdsgs" />
+							</p:inplace>
+							<p:growl id="bmpdsgs" />
+						</h:panelGroup>
+
+						<h:outputLabel value="Action taken if any" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<p:inplace editor="true" id="bmActionTaken">
+								<p:inputTextarea rows="5" cols="30" counter="counter2" maxlength="100"       
+								    counterTemplate="{0} characters remaining." autoResize="false" value="#{centerBean.center.bmActionTaken}"/>  
+								<h:outputText id="counter2" />
+				                <p:ajax event="save" listener="#{centerBean.updateBMActionTaken}" update="bmatsgs" />
+							</p:inplace>
+							<p:growl id="bmatsgs" />	
+						</h:panelGroup>
+						
+						<h:outputLabel value="Calculated Risk Rating" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<h:outputText value="#{centerBean.center.riskRating}" />
+						</h:panelGroup>
+
+						<h:outputLabel value="" />
+						<h:panelGroup>
+							<p:spacer width="20" height="0">
+							</p:spacer>
+
+							<p:commandButton value="Calculate Rating"
+								actionListener="#{riskRatingBean.calculateCenterRiskRating(centerBean.center.customerId)}"
+								update="messages" />
+							<p:ajaxStatus style="width:16px;height:16px;"
+								id="ajaxStatusPanel">
+								<f:facet name="start">
+									<h:graphicImage value="/resources/images/ajaxloading.jpg" />
+								</f:facet>
+
+								<f:facet name="complete">
+									<h:outputText value="" />
+								</f:facet>
+							</p:ajaxStatus>
+
+						</h:panelGroup>
+
+						<h:outputLabel value="Loan Officer" styleClass="bold" />
+						<h:panelGroup>
+							<h:outputText value=":" styleClass="bold" />
+							<p:spacer width="20" height="0">
+							</p:spacer>
+							<h:outputText value="#{centerBean.center.loanOfficerName}"></h:outputText>
+						</h:panelGroup>
+
+
+					</h:panelGrid>
+
+				</h:panelGrid>
+				<h:panelGrid columns="1" id="additionalInfoPanelGrid"
+					styleClass="big_table_wide" cellpadding="5">
+
+					<p:panel header="Quick Links" style="width:100%">
+						<h:panelGrid>
+							<p:commandLink
+								action="#{centerBean.viewAttendanceHistory(centerBean.center.customerId)}"
+								ajax="false">
+								<h:graphicImage library="images" name="attendance_small.png" />
+								<p:spacer width="10" />
+								<h:outputText value="Attendance History" />
+							</p:commandLink>
+							<p:commandLink
+								action="#{auditBean.attachAnAudit(3,centerBean.center.customerId)}"
+								ajax="false">
+								<h:graphicImage library="images" name="attach.png" />
+								<p:spacer width="10" />
+								<h:outputText value="Attach an Audit" />
+							</p:commandLink>
+						</h:panelGrid>
+					</p:panel>
+
+					<p:panel header="Risk Rating change history"
+						style="width:100%; height:140px">
+						<!--<p:dataTable id="riskRatingHistoryTable" var="riskRatingHistory"
+							value="#{centerBean.center.previousRiskRatingDTOs}" styleClass="no-border"
+							scrollable="true" scrollHeight="135">
+							<p:column>
+								<h:outputText
+									value="#{riskRatingHistory.createdDate}: #{riskRatingHistory.comment}" />
+							</p:column>
+						</p:dataTable>
+					--></p:panel>
+
+				</h:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid styleClass="big_table_wide_left">
+				<p:tabView orientation="left">
+					<p:tab title="Center Details">
+						<p:fieldset legend="Contact Details">
+							<p:panelGrid cellpadding="25" styleClass="no_margin"
+								style="width:100%">
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="Address :" />
+									</p:column>
+									<p:column colspan="3">
+										<h:outputText value="" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="1">
+										<h:outputText value="City:" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="State:" />
+									</p:column>
+									<p:column colspan="1">
+										<h:outputText value="Zip:" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+
+						</p:fieldset>
+					</p:tab>
+					<p:tab title="Audit History">
+						<h:panelGrid columns="1" cellpadding="10">
+							<p:dataTable var="audit" value="#{centerBean.center.auditDTOs}"
+								paginator="true" rows="10"
+								emptyMessage="No Audits found with given criteria"
+								paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20,50,100">
+
+								<p:column sortBy="#{audit.name}" filterBy="#{audit.name}"
+									filterMatchMode="contains">
+									<f:facet name="header">
+										<h:outputText value="Audit Process" />
+									</f:facet>
+									<h:outputText value="#{audit.name}" />
+								</p:column>
+
+								<p:column headerText="Started Date">
+									<h:outputText value="#{audit.startDate}" />
+								</p:column>
+
+								<p:column headerText="Auditor">
+									<h:outputText value="#{audit.createdBy}" />
+								</p:column>
+
+
+								<p:column headerText="Status">
+									<h:outputText value="Active" rendered="#{audit.active == true}" />
+									<h:outputText value="Completed"
+										rendered="#{audit.active == false}" />
+								</p:column>
+
+								<p:column headerText="Auditor Observations">
+									<h:outputText value="#{audit.auditorComments}" />
+								</p:column>
+
+								<p:column headerText="Last Updated By">
+									<h:outputText value="#{audit.updatedBy}" />
+
+								</p:column>
+
+								<p:column headerText="Last Updated Date">
+									<h:outputText value="#{audit.updatedDate}" />
+								</p:column>
+
+								<p:column style="width:50px">
+									<p:commandLink rendered="#{audit.active == true}"
+										action="#{auditBean.viewAuditInProgress(audit.auditId)}"
+										immediate="true" ajax="false">
+										<span class="ui-icon ui-icon-search"></span>
+									</p:commandLink>
+									<p:commandLink rendered="#{audit.active == false}"
+										action="#{auditBean.viewClosedAudit(audit.auditId)}"
+										immediate="true" ajax="false">
+										<span class="ui-icon ui-icon-search"></span>
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</h:panelGrid>
+					</p:tab>
+
+				</p:tabView>
+			</h:panelGrid>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee      http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+ <!-- configuration of navigation rules -->
+ <navigation-rule>
+  <navigation-case>
+   <description>Handle a generic error outcome that might be returned
+				by
+				any application Action.</description>
+   <display-name>Generic Error Outcome</display-name>
+   <from-outcome>error</from-outcome>
+   <to-view-id>/error.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>home</from-outcome>
+   <to-view-id>/pages/home.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>admin</from-outcome>
+   <to-view-id>/admin/admin_main.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <!-- Navigation rules for user actions -->
+  <navigation-case>
+   <from-outcome>create_user</from-outcome>
+   <to-view-id>/admin/create_user.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>view_user</from-outcome>
+   <to-view-id>/admin/view_user.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>view_users</from-outcome>
+   <to-view-id>/admin/view_users.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <!-- Do a redirect on success so that the Browser has a chance to update 
+		its URL -->
+ <navigation-rule>
+  <from-view-id>/login.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/pages/home.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>unauthorized</from-outcome>
+   <to-view-id>/login.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <!-- Admin navigations -->
+ <navigation-rule>
+  <navigation-case>
+   <from-outcome>view_all_audit_types</from-outcome>
+   <to-view-id>/admin/view_audit_types.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>view_audit_type</from-outcome>
+   <to-view-id>/admin/view_audit_type.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <!-- Attendance navigation -->
+ <navigation-rule>
+  <navigation-case>
+   <from-outcome>save_attendance_sheet</from-outcome>
+   <to-view-id>/pages/save_attendance.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <!-- audit navigation -->
+ <navigation-rule>
+  <navigation-case>
+   <from-outcome>audits_in_progress</from-outcome>
+   <to-view-id>/audits/audits_in_progress.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>attach_an_audit</from-outcome>
+   <to-view-id>/audits/attach_audit.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>audit_process</from-outcome>
+   <to-view-id>/audits/audit_process.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>closed_audit_process</from-outcome>
+   <to-view-id>/audits/closed_audit_process.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <!-- center navigation -->
+ <navigation-rule>
+  <navigation-case>
+   <from-outcome>view_center</from-outcome>
+   <to-view-id>/pages/view_center.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>view_center_meetings</from-outcome>
+   <to-view-id>/pages/center_attendance_history.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <navigation-case>
+   <from-outcome>save_lucs</from-outcome>
+   <to-view-id>/pages/save_lucs.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <!-- JSF and Spring are integrated -->
+ <application>
+  <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+ </application>
+ <!-- client navigation -->
+</faces-config>

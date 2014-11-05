@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>IGNORED</title>
+</head>
+<body>
+	<ui:composition>
+		<h:form>
+			<h:panelGroup>
+				<p:dock position="top" maxWidth="20">
+					<p:menuitem value="Home" icon="/resources/images/home.png"
+						url="/pages/home.jsf" />
+					<p:menuitem value="Employees" icon="/resources/images/employee.png"
+						ajax="false" url="/pages/view_employees.jsf" />
+					<p:menuitem value="Reports" icon="/resources/images/reports.png"
+						ajax="false" url="/pages/reports.jsf" />
+					<p:menuitem value="Password" icon="/resources/images/password.png"
+						ajax="false" url="/pages/edit_password.jsf" />
+					<p:menuitem value="Admin" icon="/resources/images/admin.png"
+						ajax="false" url="/admin/admin_main.jsf" />
+					<p:menuitem value="Logout" icon="/resources/images/logout.png"
+						ajax="false" url="/j_spring_security_logout" />
+				</p:dock>
+			</h:panelGroup>
+		</h:form>
+	</ui:composition>
+</body>
+</html>

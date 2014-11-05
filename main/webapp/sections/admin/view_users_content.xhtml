@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition>
+		<h:form id="form" styleClass="big_form">
+
+			<p:breadCrumb>
+				<p:menuitem value="Home" url="/" />
+				<p:menuitem value="Admin" url="/admin/admin_main.jsf" />
+				<p:menuitem value="View System Users" url="#" />
+			</p:breadCrumb>
+
+			<p:spacer height="20"></p:spacer>
+
+			<h:panelGrid columns="1" styleClass="big_table_wide">
+				<h:outputText value="System Users" styleClass="h1" />
+			</h:panelGrid>
+
+			<p:spacer height="20"></p:spacer>
+			<p:messages autoUpdate="true"></p:messages>
+			<p:dataTable id="users" var="userT" value="#{userBean.userTs}"
+				paginator="true" rows="10"
+				emptyMessage="No users found with given criteria"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,50,100" editable="true">
+
+				<p:ajax event="rowEdit" update="@this"
+					listener="#{userBean.onRowEdit}" />
+
+
+				<p:column sortBy="#{userT.lastName},#{userT.firstName}"
+					filterBy="#{userT.lastName},#{userT.firstName}" headerText="Name"
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{userT.lastName},#{userT.firstName}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{userT.firstName}" style="width:100%" />
+							<p:inputText value="#{userT.lastName}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column sortBy="#{userT.officeDTO.name}"
+					filterBy="#{userT.officeDTO.name}" headerText="Office"
+					filterMatchMode="contains">
+					<h:outputText value="#{userT.officeDTO.name}" />
+				</p:column>
+
+
+				<p:column sortBy="#{userT.mobileNumber}"
+					filterBy="#{userT.mobileNumber}" headerText="Mobile Number"
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{userT.mobileNumber}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{userT.mobileNumber}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column sortBy="#{userT.emailAddress}"
+					filterBy="#{userT.emailAddress}" headerText="Email Address"
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{userT.emailAddress}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{userT.emailAddress}" required="true"
+								requiredMessage="Please enter e-mail Address"
+								validatorMessage="Please enter a valid e-mail message">
+								<f:validateRegex
+									pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column sortBy="#{userBean.userT.userRoleT.toString()}"
+					filterBy="#{userBean.userT.userRoleT.toString()}" headerText="Role"
+					filterMatchMode="contains">
+					<h:outputText value="#{userT.userRoleT.toString()}" />
+				</p:column>
+
+				<p:column style="width:50px">
+					<p:rowEditor />
+				</p:column>
+				<p:column style="width:50px">
+					<p:commandLink action="#{userBean.delete(userT)}" ajax="false">
+						<span class="ui-icon ui-icon-trash"></span>
+					</p:commandLink>
+				</p:column>
+				<p:column style="width:50px">
+					<p:commandLink action="#{userBean.viewUser(userT.id)}"
+						immediate="true" ajax="false">
+						<span class="ui-icon ui-icon-search"></span>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

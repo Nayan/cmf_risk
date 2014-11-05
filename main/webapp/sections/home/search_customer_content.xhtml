@@ -1,0 +1,124 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+		<p:breadCrumb>
+			<p:menuitem value="Home" url="/" />
+			<p:menuitem value="Search Customers" url="#" />
+		</p:breadCrumb>
+		<h:form id="form" styleClass="big_form">
+			<!-- Export -->
+			<h:panelGrid columns="2">
+				<p:panel header="Export All Customers">
+					<h:commandLink>
+						<h:graphicImage library="images" name="excel.png" />
+						<p:dataExporter type="xls" target="customers" fileName="customers" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="pdf.png" />
+						<p:dataExporter type="pdf" target="customers" fileName="customers" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="xml.png" />
+						<p:dataExporter type="xml" target="customers" fileName="customers" />
+					</h:commandLink>
+				</p:panel>
+
+				<p:panel header="Export Visible Customers">
+					<h:commandLink>
+						<h:graphicImage library="images" name="excel.png" />
+						<p:dataExporter type="xls" target="customers" fileName="customers"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="pdf.png" />
+						<p:dataExporter type="pdf" target="customers" fileName="customers"
+							pageOnly="true" />
+					</h:commandLink>
+
+
+					<h:commandLink>
+						<h:graphicImage library="images" name="xml.png" />
+						<p:dataExporter type="xml" target="customers" fileName="customers"
+							pageOnly="true" />
+					</h:commandLink>
+				</p:panel>
+			</h:panelGrid>
+
+			<p:dataTable id="customers" var="searchCustomerT"
+				value="#{searchBean.customerTs}" paginator="true" rows="10"
+				emptyMessage="No customers found with given criteria"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,50,100">
+
+				<p:column sortBy="#{searchCustomerT.officeT.name}"
+					filterBy="#{searchCustomerT.officeT.name}"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Parent Office" />
+					</f:facet>
+					<h:outputText value="#{searchCustomerT.officeT.name}" />
+				</p:column>
+				<p:column
+					sortBy="#{searchCustomerT.firstName} #{searchCustomerT.lastName}"
+					filterBy="#{searchCustomerT.firstName} #{searchCustomerT.lastName}"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Customer Name" />
+					</f:facet>
+					<h:outputText
+						value="#{searchCustomerT.firstName} #{searchCustomerT.lastName}" />
+				</p:column>
+				<p:column sortBy="#{searchCustomerT.gender}"
+					filterBy="#{searchCustomerT.gender}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Gender" />
+					</f:facet>
+					<h:outputText value="#{searchCustomerT.gender}">
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="#{searchCustomerT.dateOfBirth}"
+					filterBy="#{searchCustomerT.dateOfBirth}"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Date of Birth" />
+					</f:facet>
+					<h:outputText value="#{searchCustomerT.dateOfBirth}">
+						<f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+					</h:outputText>
+				</p:column>
+				<p:column sortBy="#{searchCustomerT.mobileNumber}"
+					filterBy="#{searchCustomerT.mobileNumber}"
+					filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="Mobile Number" />
+					</f:facet>
+					<h:outputText value="#{searchCustomerT.mobileNumber}" />
+				</p:column>
+				<p:column sortBy="#{searchCustomerT.externalId}"
+					filterBy="#{searchCustomerT.externalId}" filterMatchMode="contains">
+					<f:facet name="header">
+						<h:outputText value="External Identifier" />
+					</f:facet>
+					<h:outputText value="#{searchCustomerT.externalId}" />
+				</p:column>
+				<p:column style="width:50px">
+					<p:commandLink
+						action="#{customerBean.viewCustomer(searchCustomerT.id)}"
+						immediate="true" ajax="false">
+						<span class="ui-icon ui-icon-search"></span>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>
